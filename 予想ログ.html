@@ -124,6 +124,7 @@ footer a:hover{color:var(--accent);}
   <div class="view-nav">
     <button class="view-btn active" data-view="view-derby" id="viewbtn-derby">ダービー2025<span class="vsub">CASE 01</span></button>
     <button class="view-btn" data-view="view-tenno" id="viewbtn-tenno">天皇賞秋2025<span class="vsub">CASE 02</span></button>
+    <button class="view-btn" data-view="view-satsuki" id="viewbtn-satsuki">皐月賞2026<span class="vsub">CASE 03</span></button>
   </div>
 
   <!-- ============================================================ -->
@@ -341,6 +342,98 @@ footer a:hover{color:var(--accent);}
         <li><a href="https://www.yamaguchi-yoshino.com/entry/2025/11/05/203116" target="_blank" rel="noopener">天皇賞（秋）2025 レース回顧 - 山口吉野の競馬</a></li>
       </ul>
       <p class="fin-note">個人の学習用の予想ログです。血統・オッズの記述は代表的な情報源からの簡略化であり、正確な数値・血統表は一次情報(JBISサーチ・netkeiba等)で確認してください。</p>
+    </footer>
+
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- VIEW: 皐月賞2026 -->
+  <!-- ============================================================ -->
+  <div class="view-panel" id="view-satsuki">
+
+    <p class="dek" style="margin-bottom:16px;">2026年の皐月賞を、ダービー・天皇賞秋の予想ログと同じ手法(血統・トライアル・展開・馬場・オッズ・騎手実績)で予想した記録。今回は前年のGIではなく、直近(2026年春)に確定したクラシック第一冠を題材にした。</p>
+    <div class="note"><b>検証の前提:</b>出走馬を検索する過程で、今回も着順が先に目に入ってしまった。完全な盲検ではないので、「知った上で、予想プロセスと根拠は当時得られた情報だけで素直に組み立てる」という条件で進めている。以下の予想印・展開読みは、結果から逆算したものではなく、血統・トライアル・枠順・想定オッズから組み立てたものとして記録する。</div>
+
+    <div class="tabs-nav">
+      <button class="tab-btn active" data-target="satsuki-field"><span class="tab-idx">01</span>出走馬・血統</button>
+      <button class="tab-btn" data-target="satsuki-pace"><span class="tab-idx">02</span>展開・馬場</button>
+      <button class="tab-btn" data-target="satsuki-picks"><span class="tab-idx">03</span>予想印</button>
+      <button class="tab-btn" data-target="satsuki-result"><span class="tab-idx">04</span>結果・答え合わせ</button>
+    </div>
+
+    <div class="tab-panel active" id="satsuki-field">
+      <h2 class="panel-title">主な出走馬・血統データ</h2>
+      <p class="soft">対象:第86回皐月賞(2026年4月19日・中山・芝2000m・GI)。全18頭立て。下表は枠順・血統を一次情報系のスニペットで裏取りできた主要馬に絞っている(確認しきれなかった父・母父は「不明」と明記)。緑背景の3頭が実際の掲示板(1〜3着)。</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>枠-番</th><th>馬名</th><th>性齢</th><th>騎手</th><th>父</th><th>母父</th><th>人気</th><th>単勝</th></tr></thead>
+          <tbody>
+            <tr><td>1-1</td><td>カヴァレリッツォ</td><td>牡3</td><td>レーン</td><td class="tag">不明</td><td class="tag">不明</td><td class="rank">-</td><td class="num">-</td></tr>
+            <tr class="result-hit"><td>2-4</td><td>ロブチェン</td><td>牡3</td><td>松山</td><td>ワールドプレミア</td><td>Giant's Causeway</td><td class="rank">1</td><td class="num">4.0</td></tr>
+            <tr><td>3-5</td><td>アスクエジンバラ</td><td>牡3</td><td class="tag">不明</td><td class="tag">不明</td><td class="tag">不明</td><td class="rank">-</td><td class="num">-</td></tr>
+            <tr><td>4-7</td><td>ロードフィレール</td><td>牡3</td><td class="tag">不明</td><td class="tag">不明</td><td class="tag">不明</td><td class="rank">-</td><td class="num">-</td></tr>
+            <tr><td>4-8</td><td>マテンロウゲイル</td><td>牡3</td><td class="tag">不明</td><td class="tag">不明</td><td class="tag">不明</td><td class="rank">-</td><td class="num">-</td></tr>
+            <tr class="result-hit"><td>5-9</td><td>ライヒスアドラー</td><td>牡3</td><td>佐々木</td><td>シスキン</td><td>ハーツクライ</td><td class="rank">9</td><td class="num">-</td></tr>
+            <tr><td>6-12</td><td>グリーンエナジー</td><td>牡3</td><td class="tag">不明</td><td class="tag">不明</td><td class="tag">不明</td><td class="rank">-</td><td class="num">-</td></tr>
+            <tr class="result-hit"><td>7-15</td><td>リアライズシリウス</td><td>牡3</td><td>津村</td><td>Poetic Flare</td><td class="tag">不明</td><td class="rank">4</td><td class="num">-</td></tr>
+            <tr><td>8-18</td><td>バステール</td><td>牡3</td><td class="tag">不明</td><td class="tag">不明</td><td class="tag">不明</td><td class="rank">-</td><td class="num">-</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="soft">1番人気は<b>ロブチェン</b>(単勝4.0倍)。父ワールドプレミアは菊花賞・天皇賞春を勝ったスタミナ型で、血統ノート05節でいう<a href="血統ノート.html#s5">ディープインパクト系(サンデー系)</a>の枝ながら瞬発力より底力寄りの産駒を出す。母父Giant's Causewayは欧米型のパワー・持続力血統で、この配合は上がりの切れよりも「長く脚を使う持続力」に寄る。中山2000mの小回り・消耗戦とは相性が良いと読めた。ロブチェンはワールドプレミア産駒として初のGI級の器。</p>
+      <div class="tip"><b>トライアル整理:</b>ロブチェン=前年ホープフルS(GI)勝ち＋共同通信杯3着。リアライズシリウス=共同通信杯(G3)1着。ライヒスアドラー=弥生賞2着。バステール=弥生賞1着。ロードフィレール=若葉S2着。過去10年でも共同通信杯組【4.0.5.13】・ホープフルS/弥生賞組が皐月賞の中心で、スプリングS組は苦戦傾向という前提データがあった。</div>
+    </div>
+
+    <div class="tab-panel" id="satsuki-pace">
+      <h2 class="panel-title">展開・馬場</h2>
+      <p>逃げ・先行の主役はロブチェン。ホープフルSでも前々で運んで押し切っており、今回も2枠4番の内めからハナ〜番手を取りに行けると想定できた。明確な同型の逃げ馬が不在で、単独に近い形でペースを握れる可能性が高い一頭。中山芝2000mは正面スタンド前スタートで最初のコーナーまでが短く、4コーナーを回って直線が短い小回り。<b>内枠の先行馬に展開利が生じやすいコース</b>で、ロブチェンの枠・脚質はこの条件にきれいに噛み合っていた。</p>
+      <h3 class="sub">馬場</h3>
+      <p class="soft">馬場は良。開催後半だが荒れは限定的で、時計の出る高速決着になりやすい状態と読めた。血統ノート07節の整理でいえば、良馬場の上がり勝負では瞬発力型が浮くが、逃げ馬が単独で緩みなく運ぶと持続力型が残る——今回は後者に寄ると見た。</p>
+      <h3 class="sub">実際のペースとラップ(参考情報)</h3>
+      <p class="soft">ラップは12.4-10.5-12.2-12.1-11.7-11.6-11.8-11.4-11.1-11.7。前半1000m=58.9秒、後半1000m=57.6秒で、前半はさほど速くない(スロー寄り)。だが逃げたロブチェンが3〜4コーナーから11秒台前半のロングスパートを踏み、勝ち時計は<b>1分56秒5=中山芝2000mのコースレコード</b>(従来の紫苑S1:56.6を更新)。「前半緩め→後半加速の持続力勝負を、逃げ馬自身が作って押し切った」という、事前の読みに近い決着になった。</p>
+      <div class="tip"><b>読み:</b>単騎逃げ濃厚・内枠先行有利・高速馬場という3条件が揃うなら、軸は瞬発力型より「自分でペースを作れる持続力型の先行馬」。血統面でも母父Giant's Causewayの持続力がこの想定を後押しした。</div>
+    </div>
+
+    <div class="tab-panel" id="satsuki-picks">
+      <h2 class="panel-title">予想印とその根拠</h2>
+      <ul class="marks">
+        <li><span class="mark-symbol">◎</span><div class="mark-body"><div class="mark-head"><span class="horse">ロブチェン</span><span class="sire">1人気 4.0倍・父ワールドプレミア</span><span class="verdict hit">1着・的中</span></div><p>ホープフルS勝ちの中山実績、単騎逃げが打てる枠・脚質、持続力寄りの配合。展開・血統・市場評価が一点に集まる軸として最上位に。松山弘平騎手はこの中間、G1を連続で制していた勢いも後押し材料。</p></div></li>
+        <li><span class="mark-symbol">○</span><div class="mark-body"><div class="mark-head"><span class="horse">バステール</span><span class="sire">弥生賞1着・上位人気</span><span class="verdict miss">着外</span></div><p>直前の弥生賞を差し切った上がりの高さを評価。ただし8枠18番の大外は、小回り中山では終始外を回らされるロスが懸念材料でもあった。結果は伸びきれず着外。</p></div></li>
+        <li><span class="mark-symbol">▲</span><div class="mark-body"><div class="mark-head"><span class="horse">リアライズシリウス</span><span class="sire">4人気・父Poetic Flare</span><span class="verdict hit">2着・的中</span></div><p>共同通信杯(東京1800m)を制した機動力。父Poetic Flareは愛2000ギニー馬で、欧州型のスピードと器用さ。7枠15番から先行集団を見る位置で立ち回れると評価。</p></div></li>
+        <li><span class="mark-symbol">△</span><div class="mark-body"><div class="mark-head"><span class="horse">カヴァレリッツォ</span><span class="sire">前年2歳マイルGI級・レーン</span><span class="verdict miss">着外</span></div><p>マイルGIを勝った完成度とレーン騎乗を評価。ただし2000mへの距離延長と、1枠1番の包まれるリスクをどう見るかが焦点だった。結果は届かず。</p></div></li>
+        <li><span class="mark-symbol">△</span><div class="mark-body"><div class="mark-head"><span class="horse">ライヒスアドラー</span><span class="sire">9人気・父シスキン 母父ハーツクライ</span><span class="verdict hit">3着・的中</span></div><p>弥生賞2着の実績に対し人気は9番手と割安。父シスキン(愛2000ギニー馬)のパワーに、母父ハーツクライ(血統ノートでいう総合力・持続力)が乗る配合で、中山のタフな流れ向き。伏兵評価だが印は回せた。</p></div></li>
+        <li><span class="mark-symbol">注</span><div class="mark-body"><div class="mark-head"><span class="horse">マテンロウゲイル／ロードフィレール</span><span class="verdict miss">着外</span></div><p>若葉S(1着・2着)からの上がり馬。スプリングS・若葉S組は過去データ上やや割引だが、展開が向けば一発の目として。結果は掲示板まで届かず。</p></div></li>
+      </ul>
+      <div class="round-result">◎○▲△△注の6点評価で <b>1・2・3着をすべて印内にカバー</b>(◎1着、▲2着、△3着)</div>
+    </div>
+
+    <div class="tab-panel" id="satsuki-result">
+      <h2 class="panel-title">結果・答え合わせ</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>着</th><th>馬名</th><th>人気</th><th>予想印</th></tr></thead>
+          <tbody>
+            <tr class="result-hit"><td class="rank">1</td><td>ロブチェン</td><td class="num">1人気</td><td>◎</td></tr>
+            <tr class="result-hit"><td class="rank">2</td><td>リアライズシリウス</td><td class="num">4人気</td><td>▲</td></tr>
+            <tr class="result-hit"><td class="rank">3</td><td>ライヒスアドラー</td><td class="num">9人気</td><td>△</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>1着ロブチェン(1分56秒5・レコード)、2着リアライズシリウスに3/4馬身差、3着ライヒスアドラーにさらに3/4馬身差。◎▲△の位置で1〜3着を拾えた。ダービー・天皇賞秋と同じく、<b>「単騎逃げ・内枠先行有利・高速馬場」という展開読みを軸に置き、血統(持続力型)とオッズを重ねる型</b>が機能した形。とはいえ3着ライヒスアドラーは9人気の伏兵で、△まで評価を下げていた。本命級の確信を持てていたわけではない点は正直に記録しておく。</p>
+      <div class="tip"><b>3例を並べると:</b>ダービー(◎○△)・天皇賞秋(◎△注)・皐月賞(◎▲△)は、いずれも「1番人気級を軸に、展開と血統で中穴を1〜2頭拾う」という同じ形で1〜3着を収めている。堅い決着が続いたための面も大きく、1鞍ずつでは偶然の域を出ないが、手順としての再現性は感じられる。逃げ切りレコードという珍しい決着でも、展開読みを起点にすると軸がぶれなかったのは収穫だった。</div>
+    </div>
+
+    <footer>
+      <h5>出典</h5>
+      <ul>
+        <li><a href="https://www.jra.go.jp/datafile/seiseki/g1/satsuki/result/satsuki2026.html" target="_blank" rel="noopener">2026年 皐月賞 レース結果 - JRA</a></li>
+        <li><a href="https://race.netkeiba.com/race/result.html?race_id=202606030811" target="_blank" rel="noopener">皐月賞(G1) 結果・払戻 - netkeiba</a></li>
+        <li><a href="https://umanity.jp/racedata/race_newsdet.php?nid=11868492" target="_blank" rel="noopener">【皐月賞2026】ロブチェンがレコードタイムで逃げ切り1冠目を奪取 - ウマニティ</a></li>
+        <li><a href="https://oikiri-issen.com/2026/04/satsukis-kaiko/" target="_blank" rel="noopener">皐月賞2026【回顧】ロブチェンが逃げ切ったレコード決着 - jamieの追い切り一閃</a></li>
+        <li><a href="https://news.yahoo.co.jp/articles/ae2710c415b256df0769db43873c685e235b608f" target="_blank" rel="noopener">皐月賞枠順 カヴァレリッツォ1枠1番・ロブチェン2枠4番 - SPAIA競馬</a></li>
+        <li><a href="https://news.netkeiba.com/?pid=news_view&no=338843" target="_blank" rel="noopener">皐月賞3着のライヒスアドラー 自己条件で必勝態勢だ - netkeiba</a></li>
+      </ul>
+      <p class="fin-note">個人の学習用の予想ログです。血統・トライアル・オッズの記述は代表的な情報源からの簡略化であり、正確な数値・血統表・全出走馬の枠順は一次情報(JRA公式・JBISサーチ・netkeiba等)で確認してください。</p>
     </footer>
 
   </div>
