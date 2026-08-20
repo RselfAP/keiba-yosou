@@ -27,7 +27,7 @@ body{
   line-height:1.85; overflow-x:hidden; font-feature-settings:'palt' 1;
 }
 ::selection{background:var(--accent-soft); color:var(--ink);}
-.page{max-width:880px; margin:0 auto; padding:0 20px 100px;}
+.page{max-width:1120px; margin:0 auto; padding:0 20px 100px;}
 
 .masthead{padding:44px 0 0;}
 .eyebrow{font-family:'JetBrains Mono', monospace; font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); font-weight:700; margin:0 0 12px;}
@@ -35,20 +35,55 @@ h1.title{font-family:'Shippori Mincho', serif; font-weight:800; font-size:clamp(
 .dek{font-size:1rem; color:var(--ink-soft); max-width:40em; margin:0 0 24px; text-wrap:balance;}
 .dek a{color:var(--accent);}
 
-.view-nav{display:flex; gap:6px; border-bottom:2px solid var(--line); overflow-x:auto; -ms-overflow-style:none; scrollbar-width:none;}
-.view-nav::-webkit-scrollbar{display:none;}
-.view-btn{
-  font-family:'Shippori Mincho', serif; font-weight:700; font-size:1rem;
-  color:var(--ink-faint); background:none; border:none; border-bottom:3px solid transparent;
-  padding:14px 18px; cursor:pointer; white-space:nowrap; transition:color .15s, border-color .15s;
+.layout{display:flex; align-items:flex-start; gap:28px; margin-top:8px;}
+.race-index{
+  width:252px; flex-shrink:0; position:sticky; top:20px; align-self:flex-start;
+  max-height:calc(100vh - 40px); overflow-y:auto;
+  background:var(--surface); border:1px solid var(--line); border-radius:12px;
+  box-shadow:var(--shadow); padding:16px;
 }
-.view-btn .vsub{display:block; font-family:'JetBrains Mono', monospace; font-size:.66rem; font-weight:500; letter-spacing:.03em; color:var(--ink-faint); margin-top:2px;}
-.view-btn:hover{color:var(--ink);}
-.view-btn.active{color:var(--accent); border-bottom-color:var(--accent);}
-.view-btn.active .vsub{color:var(--accent);}
+.back-index-btn{
+  display:block; width:100%; font-family:'Zen Kaku Gothic New', sans-serif; font-weight:700; font-size:.82rem;
+  color:var(--accent); background:var(--accent-soft); border:1px solid var(--accent-soft); border-radius:8px;
+  padding:9px 10px; cursor:pointer; text-align:center; margin:0 0 14px; transition:background .15s, color .15s;
+}
+.back-index-btn:hover{background:var(--accent); color:var(--surface);}
+.filter-wrap{margin:0 0 16px;}
+#race-filter{
+  width:100%; font-family:'Zen Kaku Gothic New', sans-serif; font-size:.82rem; padding:8px 10px;
+  border:1px solid var(--line); border-radius:8px; background:var(--bg); color:var(--ink); outline:none;
+}
+#race-filter:focus{border-color:var(--accent);}
+#race-filter::placeholder{color:var(--ink-faint);}
+.year-group{margin:0 0 18px;}
+.year-group:last-child{margin-bottom:0;}
+.year-group h3{
+  font-family:'JetBrains Mono', monospace; font-size:.7rem; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--ink-faint); margin:0 0 8px; padding-bottom:4px; border-bottom:1px solid var(--line);
+}
+.year-group ul{list-style:none; margin:0; padding:0; display:grid; gap:3px;}
+.race-link{
+  display:block; font-family:'Shippori Mincho', serif; font-size:.87rem; font-weight:600;
+  color:var(--ink-soft); text-decoration:none; padding:7px 9px; border-radius:7px; transition:background .15s, color .15s;
+}
+.race-link .vsub{display:block; font-family:'JetBrains Mono', monospace; font-size:.62rem; font-weight:500; letter-spacing:.02em; color:var(--ink-faint); margin-top:2px;}
+.race-link:hover{background:var(--surface-2); color:var(--ink);}
+.race-link.active{background:var(--accent-soft); color:var(--accent);}
+.race-link.active .vsub{color:var(--accent);}
+.race-link.filtered-out{display:none;}
+.year-group.all-filtered{display:none;}
+
+.race-content{flex:1; min-width:0;}
 .view-panel{display:none; padding:36px 0 10px;}
 .view-panel.active{display:block; animation:fade .25s ease;}
 @keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
+.index-table td a{color:var(--ink); text-decoration:none; font-weight:700;}
+.index-table td a:hover{color:var(--accent); text-decoration:underline;}
+
+@media (max-width: 760px){
+  .layout{flex-direction:column;}
+  .race-index{width:100%; position:static; max-height:none;}
+}
 
 .tabs-nav{display:flex; gap:4px; overflow-x:auto; border-bottom:2px solid var(--line); margin:8px 0 0; -ms-overflow-style:none; scrollbar-width:none;}
 .tabs-nav::-webkit-scrollbar{display:none;}
@@ -121,17 +156,53 @@ footer a:hover{color:var(--accent);}
     <p class="dek">去年のGIレースを、当時の情報だけでAIで予想してみた記録集。血統の基礎理論は<a href="血統ノート.html">血統ノート</a>に別立てでまとめてあり、こちらはその実践編。</p>
   </div>
 
-  <div class="view-nav">
-    <button class="view-btn active" data-view="view-derby" id="viewbtn-derby">ダービー2025<span class="vsub">CASE 01</span></button>
-    <button class="view-btn" data-view="view-tenno" id="viewbtn-tenno">天皇賞秋2025<span class="vsub">CASE 02</span></button>
-    <button class="view-btn" data-view="view-satsuki" id="viewbtn-satsuki">皐月賞2026<span class="vsub">CASE 03</span></button>
-    <button class="view-btn" data-view="view-takamatsu" id="viewbtn-takamatsu">高松宮記念2026<span class="vsub">CASE 04</span></button>
+  <div class="layout">
+
+  <aside class="race-index">
+    <button class="back-index-btn" type="button" id="btn-back-index">全レース一覧</button>
+    <div class="filter-wrap">
+      <input type="text" id="race-filter" placeholder="レース名で検索">
+    </div>
+    <div class="year-group">
+      <h3>2026年</h3>
+      <ul>
+        <li><a href="#" class="race-link" data-view="view-takamatsu">高松宮記念(3月)<span class="vsub">CASE 04</span></a></li>
+        <li><a href="#" class="race-link" data-view="view-satsuki">皐月賞(4月)<span class="vsub">CASE 03</span></a></li>
+      </ul>
+    </div>
+    <div class="year-group">
+      <h3>2025年</h3>
+      <ul>
+        <li><a href="#" class="race-link" data-view="view-derby">ダービー(6月)<span class="vsub">CASE 01</span></a></li>
+        <li><a href="#" class="race-link" data-view="view-tenno">天皇賞秋(11月)<span class="vsub">CASE 02</span></a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="race-content">
+
+  <!-- ============================================================ -->
+  <!-- VIEW: 全レース一覧(インデックス) -->
+  <!-- ============================================================ -->
+  <div class="view-panel active" id="view-index">
+    <p class="dek" style="margin-bottom:16px;">これまでに予想ログとして記録した全レース一覧。年度・開催日順(古い年→新しい年、各年度内は開催月順)に並んでいる。行をクリックすると、そのレースの詳細(血統・展開・予想印・答え合わせ)にジャンプする。</p>
+    <div class="table-wrap index-table">
+      <table>
+        <thead><tr><th>年度</th><th>開催日</th><th>レース名</th><th>予想印(◎)</th><th>結果</th></tr></thead>
+        <tbody>
+          <tr><td class="num">2026</td><td class="num">3/29</td><td><a href="#" class="race-link" data-view="view-takamatsu">高松宮記念</a></td><td>◎ サトノレーヴ</td><td><span class="verdict hit">1着・的中</span></td></tr>
+          <tr><td class="num">2026</td><td class="num">4/19</td><td><a href="#" class="race-link" data-view="view-satsuki">皐月賞</a></td><td>◎ ロブチェン</td><td><span class="verdict hit">1着・的中</span></td></tr>
+          <tr><td class="num">2025</td><td class="num">6/1</td><td><a href="#" class="race-link" data-view="view-derby">ダービー</a></td><td>◎ クロワデュノール</td><td><span class="verdict hit">1着・的中</span></td></tr>
+          <tr><td class="num">2025</td><td class="num">11/2</td><td><a href="#" class="race-link" data-view="view-tenno">天皇賞秋</a></td><td>◎ マスカレードボール</td><td><span class="verdict hit">1着・的中</span></td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <!-- ============================================================ -->
   <!-- VIEW: ダービー2025 -->
   <!-- ============================================================ -->
-  <div class="view-panel active" id="view-derby">
+  <div class="view-panel" id="view-derby">
 
     <p class="dek" style="margin-bottom:16px;">2025年の日本ダービーを、当時の出走情報・血統・トライアル結果・展開・馬場・オッズ・騎手実績だけを材料にAIで予想した記録。最終的に到達した予想根拠を4タブでまとめ、そこへ至るまでの3段階の試行錯誤は「検討過程」タブに残した。</p>
     <div class="note"><b>正直に：</b>「結果を見ずに予想する」つもりで検索したところ、1件目のスニペットに着順が含まれていて避けようもなく見えてしまった。完全な盲検ではなくなったが、「知った上で、それでも予想プロセスと根拠は素直に組み立てる」という条件で続行した。</div>
@@ -564,19 +635,49 @@ footer a:hover{color:var(--accent);}
 
   </div>
 
+  </main>
+
+  </div>
+
 </div>
 
 <script>
 (function(){
-  var btns = document.querySelectorAll('.view-nav > .view-btn');
-  btns.forEach(function(btn){
-    btn.addEventListener('click', function(){
-      btns.forEach(function(b){ b.classList.remove('active'); });
-      document.querySelectorAll('.page > .view-panel').forEach(function(p){ p.classList.remove('active'); });
-      btn.classList.add('active');
-      document.getElementById(btn.dataset.view).classList.add('active');
+  var panels = document.querySelectorAll('.race-content > .view-panel');
+  var navLinks = document.querySelectorAll('.race-link');
+  function showView(id){
+    var target = document.getElementById(id);
+    if(!target) return;
+    panels.forEach(function(p){ p.classList.remove('active'); });
+    target.classList.add('active');
+    navLinks.forEach(function(a){ a.classList.toggle('active', a.dataset.view === id); });
+    window.scrollTo(0, 0);
+  }
+  navLinks.forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      showView(a.dataset.view);
     });
   });
+  var backBtn = document.getElementById('btn-back-index');
+  if(backBtn){
+    backBtn.addEventListener('click', function(){ showView('view-index'); });
+  }
+  var filterInput = document.getElementById('race-filter');
+  if(filterInput){
+    filterInput.addEventListener('input', function(){
+      var q = filterInput.value.trim().toLowerCase();
+      document.querySelectorAll('.race-index .year-group').forEach(function(group){
+        var anyVisible = false;
+        group.querySelectorAll('.race-link').forEach(function(a){
+          var match = a.textContent.toLowerCase().indexOf(q) !== -1;
+          a.classList.toggle('filtered-out', !match);
+          if(match) anyVisible = true;
+        });
+        group.classList.toggle('all-filtered', !anyVisible);
+      });
+    });
+  }
 })();
 document.querySelectorAll('.view-panel').forEach(function(view){
   var nav = view.querySelector(':scope > .tabs-nav');
