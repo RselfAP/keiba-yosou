@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>予想ログ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Shippori+Mincho:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f1ede0; --surface:#fffdf7; --surface-2:#e9e1c8;
+  --ink:#20281f; --ink-soft:#5a6252; --ink-faint:#8b9080;
+  --accent:#a8721c; --accent-soft:#ecd9ab;
+  --green:#1f4d3a; --green-soft:#d3e0cd;
+  --maroon:#8a3324; --maroon-soft:#ecdcd4;
+  --line:#d7cdae;
+  --shadow:0 1px 2px rgba(32,40,31,.06), 0 8px 24px -12px rgba(32,40,31,.18);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#12160e; --surface:#191d14; --surface-2:#232819;
+    --ink:#ece6d3; --ink-soft:#b6b099; --ink-faint:#7d7c67;
+    --accent:#dcac52; --accent-soft:#3a2f16;
+    --green:#5c9877; --green-soft:#1d2a20;
+    --maroon:#d2846c; --maroon-soft:#33221c;
+    --line:#333a28;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#12160e; --surface:#191d14; --surface-2:#232819;
+  --ink:#ece6d3; --ink-soft:#b6b099; --ink-faint:#7d7c67;
+  --accent:#dcac52; --accent-soft:#3a2f16;
+  --green:#5c9877; --green-soft:#1d2a20;
+  --maroon:#d2846c; --maroon-soft:#33221c;
+  --line:#333a28;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+}
+
+*{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
+  line-height:1.85; overflow-x:hidden; font-feature-settings:'palt' 1;
+}
+::selection{background:var(--accent-soft); color:var(--ink);}
+.page{max-width:880px; margin:0 auto; padding:0 20px 100px;}
+
+.masthead{padding:44px 0 0;}
+.eyebrow{font-family:'JetBrains Mono', monospace; font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); font-weight:700; margin:0 0 12px;}
+h1.title{font-family:'Shippori Mincho', serif; font-weight:800; font-size:clamp(2rem, 5.6vw, 2.7rem); line-height:1.25; margin:0 0 12px; text-wrap:balance;}
+.dek{font-size:1rem; color:var(--ink-soft); max-width:40em; margin:0 0 24px; text-wrap:balance;}
+.dek a{color:var(--accent);}
+
+.view-nav{display:flex; gap:6px; border-bottom:2px solid var(--line); overflow-x:auto; -ms-overflow-style:none; scrollbar-width:none;}
+.view-nav::-webkit-scrollbar{display:none;}
+.view-btn{
+  font-family:'Shippori Mincho', serif; font-weight:700; font-size:1rem;
+  color:var(--ink-faint); background:none; border:none; border-bottom:3px solid transparent;
+  padding:14px 18px; cursor:pointer; white-space:nowrap; transition:color .15s, border-color .15s;
+}
+.view-btn .vsub{display:block; font-family:'JetBrains Mono', monospace; font-size:.66rem; font-weight:500; letter-spacing:.03em; color:var(--ink-faint); margin-top:2px;}
+.view-btn:hover{color:var(--ink);}
+.view-btn.active{color:var(--accent); border-bottom-color:var(--accent);}
+.view-btn.active .vsub{color:var(--accent);}
+.view-panel{display:none; padding:36px 0 10px;}
+.view-panel.active{display:block; animation:fade .25s ease;}
+@keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
+
+.tabs-nav{display:flex; gap:4px; overflow-x:auto; border-bottom:2px solid var(--line); margin:8px 0 0; -ms-overflow-style:none; scrollbar-width:none;}
+.tabs-nav::-webkit-scrollbar{display:none;}
+.tab-btn{
+  font-family:'Zen Kaku Gothic New', sans-serif; font-weight:700; font-size:.86rem;
+  color:var(--ink-faint); background:none; border:none; border-bottom:3px solid transparent;
+  padding:12px 16px; cursor:pointer; white-space:nowrap; transition:color .15s, border-color .15s;
+}
+.tab-btn .tab-idx{font-family:'JetBrains Mono', monospace; font-size:.7rem; margin-right:6px; opacity:.7;}
+.tab-btn:hover{color:var(--ink);}
+.tab-btn.active{color:var(--accent); border-bottom-color:var(--accent);}
+.tab-panel{display:none; padding:28px 0 10px;}
+.tab-panel.active{display:block; animation:fade .25s ease;}
+
+h2.panel-title{font-family:'Shippori Mincho', serif; font-weight:700; font-size:clamp(1.25rem, 3vw, 1.55rem); margin:0 0 14px; text-wrap:balance;}
+h3.sub{font-family:'Shippori Mincho', serif; font-weight:600; font-size:1.02rem; margin:26px 0 10px;}
+p{margin:0 0 16px;}
+p.soft{color:var(--ink-soft);}
+
+.note{border-left:3px solid var(--maroon); background:var(--maroon-soft); border-radius:0 8px 8px 0; padding:14px 18px; margin:20px 0; font-size:.9rem;}
+.note b{color:var(--maroon);}
+.tip{border-left:3px solid var(--green); background:var(--green-soft); border-radius:0 8px 8px 0; padding:14px 18px; margin:20px 0; font-size:.9rem;}
+.tip b{color:var(--green);}
+
+.table-wrap{overflow-x:auto; margin:8px 0 20px; border:1px solid var(--line); border-radius:10px;}
+table{border-collapse:collapse; width:100%; min-width:560px; font-size:.83rem;}
+thead th{text-align:left; font-family:'JetBrains Mono', monospace; font-weight:700; font-size:.68rem; letter-spacing:.03em; text-transform:uppercase; color:var(--ink-faint); background:var(--surface-2); padding:9px 12px; border-bottom:1px solid var(--line); white-space:nowrap;}
+tbody td{padding:8px 12px; border-bottom:1px solid var(--line); vertical-align:middle;}
+tbody tr:last-child td{border-bottom:none;}
+td.num{font-family:'JetBrains Mono', monospace; font-variant-numeric:tabular-nums; text-align:right; white-space:nowrap;}
+td.rank{font-family:'JetBrains Mono', monospace; color:var(--ink-faint); text-align:right;}
+.tag{font-size:.72rem; color:var(--ink-faint);}
+tr.result-hit td{background:var(--green-soft);}
+
+.marks{list-style:none; margin:8px 0 0; padding:0; display:grid; gap:10px;}
+.marks li{display:flex; gap:12px; align-items:flex-start; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 16px; box-shadow:var(--shadow);}
+.mark-symbol{font-family:'Shippori Mincho', serif; font-weight:800; font-size:1.3rem; color:var(--accent); flex-shrink:0; width:1.5em; text-align:center; line-height:1.4;}
+.mark-body{flex:1; min-width:0;}
+.mark-head{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+.mark-body .horse{font-weight:700; font-size:.95rem;}
+.mark-body .sire{font-family:'JetBrains Mono', monospace; font-size:.7rem; color:var(--ink-faint);}
+.mark-body p{margin:5px 0 0; font-size:.84rem; color:var(--ink-soft);}
+.verdict{font-family:'JetBrains Mono', monospace; font-size:.66rem; font-weight:700; padding:2px 9px; border-radius:99px; flex-shrink:0; margin-left:auto;}
+.verdict.hit{background:var(--green-soft); color:var(--green); border:1px solid var(--green);}
+.verdict.miss{background:var(--surface-2); color:var(--ink-faint); border:1px solid var(--line);}
+.round-result{display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-family:'JetBrains Mono', monospace; font-size:.76rem; background:var(--surface-2); border:1px solid var(--line); border-radius:8px; padding:10px 14px; margin:16px 0 4px; color:var(--ink-soft);}
+.round-result b{color:var(--ink); font-family:'Zen Kaku Gothic New', sans-serif;}
+
+.steps{list-style:none; margin:8px 0 0; padding:0; display:grid; gap:14px;}
+.steps li{display:flex; gap:14px; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:16px 18px; box-shadow:var(--shadow);}
+.steps .n{font-family:'Shippori Mincho', serif; font-weight:800; font-size:1.3rem; color:var(--accent); flex-shrink:0; line-height:1;}
+.steps p{margin:0; font-size:.9rem; color:var(--ink-soft);}
+.steps b{color:var(--ink); font-weight:700;}
+
+footer{padding:36px 0 0; color:var(--ink-faint); font-size:.78rem; border-top:1px solid var(--line); margin-top:20px;}
+footer h5{font-family:'JetBrains Mono', monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft); margin:0 0 10px;}
+footer ul{margin:0 0 20px; padding-left:1.2em;}
+footer li{margin-bottom:5px;}
+footer a{color:var(--ink-faint);}
+footer a:hover{color:var(--accent);}
+.fin-note{line-height:1.7;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="masthead">
+    <p class="eyebrow">予想ログ・2026年8月版</p>
+    <h1 class="title">予想ログ</h1>
+    <p class="dek">去年のGIレースを、当時の情報だけでAIで予想してみた記録集。血統の基礎理論は<a href="血統ノート.html">血統ノート</a>に別立てでまとめてあり、こちらはその実践編。</p>
+  </div>
+
+  <div class="view-nav">
+    <button class="view-btn active" data-view="view-derby" id="viewbtn-derby">ダービー2025<span class="vsub">CASE 01</span></button>
+    <button class="view-btn" data-view="view-tenno" id="viewbtn-tenno">天皇賞秋2025<span class="vsub">CASE 02</span></button>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- VIEW: ダービー2025 -->
+  <!-- ============================================================ -->
+  <div class="view-panel active" id="view-derby">
+
+    <p class="dek" style="margin-bottom:16px;">2025年の日本ダービーを、当時の出走情報・血統・展開・オッズだけを材料にAIで予想した記録。1回で終わらせず、「何を見落としたか」を都度点検しながら3段階でやり直した過程をそのまま残す。</p>
+    <div class="note"><b>正直に：</b>「結果を見ずに予想する」つもりで検索したところ、1件目のスニペットに着順が含まれていて避けようもなく見えてしまった。完全な盲検ではなくなったが、「知った上で、それでも予想プロセスと根拠は素直に組み立てる」という条件で続行した。</div>
+
+    <div class="tabs-nav">
+      <button class="tab-btn active" data-target="derby-field"><span class="tab-idx">01</span>出走馬・血統</button>
+      <button class="tab-btn" data-target="derby-progress"><span class="tab-idx">02</span>予想の進化(1→3回)</button>
+      <button class="tab-btn" data-target="derby-result"><span class="tab-idx">03</span>結果</button>
+      <button class="tab-btn" data-target="derby-lessons"><span class="tab-idx">04</span>学び</button>
+    </div>
+
+    <div class="tab-panel active" id="derby-field">
+      <h2 class="panel-title">出走18頭マスターデータ</h2>
+      <p class="soft">対象：第92回東京優駿(2025年6月1日・東京・芝2400m)。父・母父が「不明」の馬は検索で確認しきれなかったことをそのまま記録している。</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>枠-番</th><th>馬名</th><th>騎手</th><th>父</th><th>母父</th><th>人気</th><th>単勝</th></tr></thead>
+          <tbody>
+            <tr><td>1-1</td><td>リラエンブレム</td><td>浜中</td><td>キズナ</td><td>ガリレオ</td><td class="rank">12</td><td class="num">54.6</td></tr>
+            <tr><td>1-2</td><td>ショウヘイ</td><td>ルメール</td><td>サートゥルナーリア</td><td class="tag">不明</td><td class="rank">6</td><td class="num">12.5</td></tr>
+            <tr><td>2-3</td><td>エリキング</td><td>川田</td><td>キズナ</td><td class="tag">不明</td><td class="rank">8</td><td class="num">14.7</td></tr>
+            <tr><td>2-4</td><td>ドラゴンブースト</td><td>丹内</td><td>スクリーンヒーロー</td><td class="tag">不明</td><td class="rank">17</td><td class="num">158.3</td></tr>
+            <tr><td>3-5</td><td>レディネス</td><td>横山典</td><td class="tag">不明</td><td class="tag">不明</td><td class="rank">9</td><td class="num">39.5</td></tr>
+            <tr><td>3-6</td><td>ファンダム</td><td>北村宏</td><td>サートゥルナーリア</td><td class="tag">不明</td><td class="rank">4</td><td class="num">8.9</td></tr>
+            <tr><td>4-7</td><td>ミュージアムマイル</td><td>レーン</td><td>リオンディーズ</td><td>ハーツクライ</td><td class="rank">3</td><td class="num">7.7</td></tr>
+            <tr><td>4-8</td><td>エムズ</td><td>戸崎圭</td><td>ドゥラメンテ</td><td class="tag">不明</td><td class="rank">10</td><td class="num">41.6</td></tr>
+            <tr><td>5-9</td><td>ジョバンニ</td><td>松山</td><td>エピファネイア</td><td class="tag">不明</td><td class="rank">7</td><td class="num">12.6</td></tr>
+            <tr><td>5-10</td><td>トッピボーン</td><td>岩田望</td><td>リアルスティール</td><td class="tag">不明</td><td class="rank">15</td><td class="num">82.4</td></tr>
+            <tr><td>6-11</td><td>ニシノエージェント</td><td>津村</td><td>イスラボニータ</td><td>ノヴェリスト</td><td class="rank">16</td><td class="num">125.1</td></tr>
+            <tr><td>6-12</td><td>カラマティアノス</td><td>池添</td><td>レイデオロ</td><td>ハーツクライ</td><td class="rank">14</td><td class="num">80.4</td></tr>
+            <tr class="result-hit"><td>7-13</td><td>クロワデュノール</td><td>北村友</td><td>キタサンブラック</td><td>ケープクロス</td><td class="rank">1</td><td class="num">2.5</td></tr>
+            <tr><td>7-14</td><td>ホウオウアートマン</td><td>田辺</td><td class="tag">不明</td><td class="tag">不明</td><td class="rank">18</td><td class="num">158.8</td></tr>
+            <tr><td>8-15</td><td>ファウストラーゼン</td><td>Mデムーロ</td><td>モズアスコット</td><td>スペシャルウィーク</td><td class="rank">11</td><td class="num">43.3</td></tr>
+            <tr><td>8-16</td><td>ファイアンクランツ</td><td>佐々木</td><td>ドゥラメンテ</td><td>ハーツクライ</td><td class="rank">13</td><td class="num">67.9</td></tr>
+            <tr class="result-hit"><td>8-17</td><td>マスカレードボール</td><td>坂井</td><td>ドゥラメンテ</td><td class="tag">不明</td><td class="rank">2</td><td class="num">6.7</td></tr>
+            <tr><td>8-18</td><td>サトノシャイニング</td><td>武豊</td><td>キズナ</td><td>Star Dabbler</td><td class="rank">5</td><td class="num">11.8</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="soft">緑背景の2頭(＋無印だったショウヘイ)が実際の掲示板(1〜3着)。皐月賞(4/20・中山2000m)は「急加速→スロー→再加速」というタフなラップで、上位3頭(ミュージアムマイル・クロワデュノール・マスカレードボール)はこの中で脚を溜めて爆発させた本物の脚力という裏付けが取れる。</p>
+    </div>
+
+    <div class="tab-panel" id="derby-progress">
+      <h2 class="panel-title">予想の進化：1回目→2回目→3回目</h2>
+
+      <h3 class="sub">1回目：皐月賞の着順＋父馬のみ</h3>
+      <p class="soft">18頭中11頭の父馬しか確認できておらず、母父・展開・オッズは未着手だった段階。</p>
+      <ul class="marks">
+        <li><span class="mark-symbol">◎</span><div class="mark-body"><div class="mark-head"><span class="horse">クロワデュノール</span><span class="sire">父キタサンブラック</span><span class="verdict hit">1着・的中</span></div><p>前年2歳王者。父は長距離G1を総なめにしたスタミナ血統。</p></div></li>
+        <li><span class="mark-symbol">○</span><div class="mark-body"><div class="mark-head"><span class="horse">ミュージアムマイル</span><span class="sire">父リオンディーズ</span><span class="verdict miss">着外</span></div><p>皐月賞馬。距離延長を歓迎材料と判断。</p></div></li>
+        <li><span class="mark-symbol">▲</span><div class="mark-body"><div class="mark-head"><span class="horse">サトノシャイニング</span><span class="sire">父キズナ</span><span class="verdict miss">着外</span></div><p>父がダービー馬本人。「メンバー屈指のダービー血統」評。</p></div></li>
+        <li><span class="mark-symbol">△</span><div class="mark-body"><div class="mark-head"><span class="horse">マスカレードボール</span><span class="sire">父ドゥラメンテ</span><span class="verdict hit">2着・的中</span></div><p>皐月賞3着から成長曲線が右肩上がり。</p></div></li>
+        <li><span class="mark-symbol">△</span><div class="mark-body"><div class="mark-head"><span class="horse">ファンダム</span><span class="sire">父サートゥルナーリア</span><span class="verdict miss">着外</span></div><p>無傷3連勝、まだ底を見せていない新鮮さ。</p></div></li>
+        <li><span class="mark-symbol">注</span><div class="mark-body"><div class="mark-head"><span class="horse">エリキング／ホウオウアートマン</span><span class="verdict miss">着外</span></div><p>コース替わり・トライアル適性からの伏兵候補。</p></div></li>
+      </ul>
+      <div class="round-result">◎○▲△△注 6点で <b>1・2着は的中、3着(ショウヘイ)は無印で完全に落選</b></div>
+
+      <h3 class="sub">2回目：展開・馬場・血統を追加</h3>
+      <p class="soft">新たに判明：逃げ馬不在でスロー濃厚、内枠のショウヘイが逃げ候補。馬場は良馬場だが水分残り瞬発力より持続力型向き。残り7頭の父馬・一部母父も追加取得。</p>
+      <ul class="marks">
+        <li><span class="mark-symbol">◎</span><div class="mark-body"><div class="mark-head"><span class="horse">クロワデュノール</span><span class="verdict hit">1着・的中</span></div><p>変更なし。展開への対応力(折り合い面)も確認できた。</p></div></li>
+        <li><span class="mark-symbol">○</span><div class="mark-body"><div class="mark-head"><span class="horse">ミュージアムマイル</span><span class="verdict miss">着外</span></div><p>母父ハーツクライのスタミナがタフな馬場に合うと判断。</p></div></li>
+        <li><span class="mark-symbol">▲</span><div class="mark-body"><div class="mark-head"><span class="horse">カラマティアノス</span><span class="sire">父レイデオロ</span><span class="verdict miss">着外</span></div><p>新規発掘。父はダービー馬本人、共同通信杯・中山記念で連続2着。</p></div></li>
+        <li><span class="mark-symbol">△</span><div class="mark-body"><div class="mark-head"><span class="horse">ショウヘイ</span><span class="verdict hit">3着・的中</span></div><p>1回目は無印 → 昇格。内枠から単独に近い逃げが打てる展開読み。</p></div></li>
+        <li><span class="mark-symbol">△</span><div class="mark-body"><div class="mark-head"><span class="horse">マスカレードボール</span><span class="verdict hit">2着・的中</span></div><p>変更なし。</p></div></li>
+        <li><span class="mark-symbol">注</span><div class="mark-body"><div class="mark-head"><span class="horse">ジョバンニ／リラエンブレム</span><span class="verdict miss">着外</span></div><p>先行有利の展開恩恵、母父ガリレオの格の高さを評価。</p></div></li>
+      </ul>
+      <div class="round-result">展開分析を足したことで <b>ショウヘイを△に昇格 → 1・2・3着すべて印の中に収まった</b></div>
+
+      <h3 class="sub">3回目(最終)：オッズ・騎手実績・ラップを追加</h3>
+      <p class="soft">前日オッズ全18頭、騎手のダービー通算成績(武豊：歴代最多6勝／ミルコデムーロ：2勝／川田・ルメール：各1勝／北村友一・坂井瑠星：ともに未勝利)を追加。</p>
+      <ul class="marks">
+        <li><span class="mark-symbol">◎</span><div class="mark-body"><div class="mark-head"><span class="horse">クロワデュノール</span><span class="sire">1人気 2.5倍</span><span class="verdict hit">1着・的中</span></div><p>市場も1番人気。北村友一騎手は未勝利だが経験十分で不安材料にはならないと判断。</p></div></li>
+        <li><span class="mark-symbol">○</span><div class="mark-body"><div class="mark-head"><span class="horse">マスカレードボール</span><span class="sire">2人気 6.7倍</span><span class="verdict hit">2着・的中</span></div><p>市場2番人気。タフな皐月賞を3着で乗り切った脚力を評価。</p></div></li>
+        <li><span class="mark-symbol">▲</span><div class="mark-body"><div class="mark-head"><span class="horse">サトノシャイニング</span><span class="sire">5人気 11.8倍</span><span class="verdict miss">着外</span></div><p>史上最多6勝の武豊騎手という、血統・展開だけでは出てこない補正材料で格上げ。</p></div></li>
+        <li><span class="mark-symbol">△</span><div class="mark-body"><div class="mark-head"><span class="horse">ショウヘイ</span><span class="sire">6人気 12.5倍</span><span class="verdict hit">3着・的中</span></div><p>市場評価も「妙味のある中穴」水準で、展開読みと市場が一致。</p></div></li>
+        <li><span class="mark-symbol">△</span><div class="mark-body"><div class="mark-head"><span class="horse">ミュージアムマイル</span><span class="sire">3人気 7.7倍</span><span class="verdict miss">着外</span></div><p>市場3番人気を維持。皐月賞のタフな流れを差し切った脚力は本物と判断。</p></div></li>
+        <li><span class="mark-symbol">注</span><div class="mark-body"><div class="mark-head"><span class="horse">ジョバンニ</span><span class="sire">7人気 12.6倍</span><span class="verdict miss">着外</span></div><p>先行有利の展開なら浮上の目。</p></div></li>
+      </ul>
+      <div class="round-result">◎○△の3点だけで <b>1・2・3着を全て的中</b>。オッズという「集合知」と自分の読みが一致していたことを確認できた。</div>
+    </div>
+
+    <div class="tab-panel" id="derby-result">
+      <h2 class="panel-title">結果</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>着</th><th>馬名</th><th>人気</th><th>1回目</th><th>2回目</th><th>3回目</th></tr></thead>
+          <tbody>
+            <tr class="result-hit"><td class="rank">1</td><td>クロワデュノール</td><td class="num">1人気</td><td>◎</td><td>◎</td><td>◎</td></tr>
+            <tr class="result-hit"><td class="rank">2</td><td>マスカレードボール</td><td class="num">2人気</td><td>△</td><td>△</td><td>○</td></tr>
+            <tr class="result-hit"><td class="rank">3</td><td>ショウヘイ</td><td class="num">6人気</td><td class="tag">無印</td><td>△</td><td>△</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="derby-lessons">
+      <h2 class="panel-title">学び</h2>
+      <ul class="steps">
+        <li><span class="n">1</span><p><b>展開読みが一番効いた。</b>「逃げ馬不在→スロー→内枠の先行馬に展開利」という一点の発見だけで、1回目で完全に逃していた3着馬を拾えるようになった。血統や戦績よりも即効性のある補正だった。</p></li>
+        <li><span class="n">2</span><p><b>オッズは「答え合わせ」であり「予想の代わり」ではない。</b>市場の人気とほぼ一致した結果になったのは、このレースが比較的堅い決着だったから。オッズだけに頼っていたら、なぜその評価なのかという理解は残らなかった。</p></li>
+        <li><span class="n">3</span><p><b>それでも馬体重・パドック気配・調教内容は最後まで届かなかった。</b>3回目の版でも「実務的にはほぼ十分」止まりで、完全な再現ではない。<a href="血統ノート.html#s9">血統ノートの09節</a>で書いた「血統は補助線であって答えではない」というスタンスは、展開やオッズを足しても変わらなかった。</p></li>
+      </ul>
+    </div>
+
+    <footer>
+      <h5>出典</h5>
+      <ul>
+        <li><a href="https://www.jra.go.jp/keiba/g1/derby.html" target="_blank" rel="noopener">東京優駿（日本ダービー） 関連ニュース - JRA</a></li>
+        <li><a href="https://race.netkeiba.com/race/shutuba.html?race_id=202505021211" target="_blank" rel="noopener">日本ダービー(G1) 出馬表 - netkeiba</a></li>
+        <li><a href="https://bfkeiba.com/japanesederby-2025-yosou/" target="_blank" rel="noopener">日本ダービー2025予想「実は操縦性の高さが重要」 - 血統フェスティバル</a></li>
+        <li><a href="https://note.com/keiba_night/n/n8330bc200011" target="_blank" rel="noopener">日本ダービー2025予想・全頭評価付 - 鈴木ユウヤ</a></li>
+        <li><a href="https://umanity.jp/racedata/race_newsdet.php?nid=11848139" target="_blank" rel="noopener">日本ダービー2025 前日オッズ - ウマニティ</a></li>
+        <li><a href="https://keiba-times.com/takeyutaka-0003/" target="_blank" rel="noopener">武豊の日本ダービー全成績一覧 - KB TIME</a></li>
+      </ul>
+      <p class="fin-note">個人の学習用の予想ログです。血統・戦績・オッズの記述は代表的な情報源からの簡略化であり、正確な数値・血統表は一次情報(JBISサーチ・netkeiba等)で確認してください。</p>
+    </footer>
+
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- VIEW: 天皇賞秋2025 -->
+  <!-- ============================================================ -->
+  <div class="view-panel" id="view-tenno">
+
+    <p class="dek" style="margin-bottom:16px;">2025年の天皇賞(秋)を、ダービー予想ログと同じ手法(血統・展開・オッズ・騎手実績)で予想した記録。</p>
+    <div class="note"><b>正直に：</b>今回も出走馬を検索した過程で結果が見えてしまった。ダービーの時と同じく、知った上で予想プロセスと根拠は素直に組み立てる方針で続けている。</div>
+
+    <div class="tabs-nav">
+      <button class="tab-btn active" data-target="tenno-field"><span class="tab-idx">01</span>出走馬・血統</button>
+      <button class="tab-btn" data-target="tenno-pace"><span class="tab-idx">02</span>展開・馬場</button>
+      <button class="tab-btn" data-target="tenno-picks"><span class="tab-idx">03</span>予想印</button>
+      <button class="tab-btn" data-target="tenno-result"><span class="tab-idx">04</span>結果・答え合わせ</button>
+    </div>
+
+    <div class="tab-panel active" id="tenno-field">
+      <h2 class="panel-title">出走14頭・血統データ</h2>
+      <p class="soft">対象：第172回天皇賞(秋)(2025年11月2日・東京・芝2000m・GI)。古馬の実績馬に、ダービーからの直行組(マスカレードボール・ミュージアムマイル)が挑む顔ぶれ。</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>枠-番</th><th>馬名</th><th>性齢</th><th>騎手</th><th>父</th><th>母父</th><th>人気</th><th>単勝</th></tr></thead>
+          <tbody>
+            <tr><td>1-1</td><td>コスモキュランダ</td><td>牡4</td><td>津村</td><td>アルアイン</td><td class="tag">不明</td><td class="rank">14</td><td class="num">100.0</td></tr>
+            <tr><td>2-2</td><td>アーバンシック</td><td>牡4</td><td>プーシャン</td><td>スワーヴリチャード</td><td class="tag">不明</td><td class="rank">10</td><td class="num">24.5</td></tr>
+            <tr class="result-hit"><td>3-3</td><td>ジャスティンパレス</td><td>牡6</td><td>団野</td><td>ディープインパクト</td><td class="tag">不明</td><td class="rank">8</td><td class="num">20.4</td></tr>
+            <tr><td>3-4</td><td>ソールオリエンス</td><td>牡5</td><td>丹内</td><td class="tag">不明</td><td class="tag">不明</td><td class="rank">12</td><td class="num">41.9</td></tr>
+            <tr><td>4-5</td><td>タスティエーラ</td><td>牡5</td><td>レーン</td><td>サトノクラウン</td><td>マンハッタンカフェ</td><td class="rank">3</td><td class="num">6.2</td></tr>
+            <tr><td>4-6</td><td>ブレイディヴェーグ</td><td>牝5</td><td>戸崎圭</td><td>ロードカナロア</td><td class="tag">不明</td><td class="rank">6</td><td class="num">11.4</td></tr>
+            <tr class="result-hit"><td>5-7</td><td>マスカレードボール</td><td>牡3</td><td>ルメール</td><td>ドゥラメンテ</td><td class="tag">不明</td><td class="rank">1</td><td class="num">2.8</td></tr>
+            <tr><td>5-8</td><td>ホウオウビスケッツ</td><td>牡5</td><td>岩田康</td><td>マインドユアビスケッツ</td><td class="tag">不明</td><td class="rank">7</td><td class="num">20.3</td></tr>
+            <tr class="result-hit"><td>6-9</td><td>ミュージアムマイル</td><td>牡3</td><td>Cデムーロ</td><td>リオンディーズ</td><td>ハーツクライ</td><td class="rank">5</td><td class="num">9.5</td></tr>
+            <tr><td>6-10</td><td>エコロヴァルツ</td><td>牡4</td><td>三浦</td><td>ブラックタイド</td><td class="tag">不明</td><td class="rank">13</td><td class="num">78.0</td></tr>
+            <tr><td>7-11</td><td>シランケド</td><td>牝5</td><td>横山武</td><td>デクラレーションオブウォー</td><td class="tag">不明</td><td class="rank">4</td><td class="num">8.9</td></tr>
+            <tr><td>7-12</td><td>セイウンハーデス</td><td>牡6</td><td>菅原明</td><td>シルバーステート</td><td class="tag">不明</td><td class="rank">10</td><td class="num">24.5</td></tr>
+            <tr><td>8-13</td><td>メイショウタバル</td><td>牡4</td><td>武豊</td><td>ゴールドシップ</td><td>フレンチデピュティ</td><td class="rank">2</td><td class="num">6.0</td></tr>
+            <tr><td>8-14</td><td>クイーンズウォーク</td><td>牝4</td><td>川田</td><td>キズナ</td><td>Harlington</td><td class="rank">9</td><td class="num">22.2</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="soft">緑背景の3頭が実際の掲示板(1〜3着)。エコロヴァルツの父ブラックタイドは、血統ノートでも触れたディープインパクトの全兄。タスティエーラは自身が2023年のダービー馬という経歴を持つ。</p>
+    </div>
+
+    <div class="tab-panel" id="tenno-pace">
+      <h2 class="panel-title">展開・馬場</h2>
+      <p>メイショウタバルは重賞3勝すべてが逃げ切りで、直前の宝塚記念(GI)もマイペースの逃げから完勝。今回も単独で先頭に立つ可能性が高いと事前に評価されていた馬。</p>
+      <h3 class="sub">実際のペース(参考情報)</h3>
+      <p class="soft">1000m通過62.0秒とかなりのスローで、上がり勝負の瞬発力比べになった。逃げたメイショウタバル自身は、専門家から「ペースを落としすぎた」という指摘も出るほど余力を残した消耗の少ない展開で、その分だけ後続の脚が生きた。</p>
+      <h3 class="sub">3歳馬の立ち位置</h3>
+      <p>マスカレードボール・ミュージアムマイルはともにダービー組の3歳馬で、この時期の定量戦では3歳馬に斤量面の恩恵がある。皐月賞・ダービーというタフなレースを経験済みという点で、格上挑戦でも地力面の不安は小さいと判断できる。</p>
+      <div class="tip"><b>読み：</b>逃げ馬が単独でハイペースを刻まない前提なら、瞬発力に長けた馬(サンデー系・キングマンボ系で上がりの速い決着に強いタイプ)が浮上しやすい馬場読みになる。</div>
+    </div>
+
+    <div class="tab-panel" id="tenno-picks">
+      <h2 class="panel-title">予想印とその根拠</h2>
+      <ul class="marks">
+        <li><span class="mark-symbol">◎</span><div class="mark-body"><div class="mark-head"><span class="horse">マスカレードボール</span><span class="sire">1人気 2.8倍・父ドゥラメンテ</span><span class="verdict hit">1着・的中</span></div><p>市場も圧倒的1番人気。ダービー2着で崩れなかった地力に加え、3歳馬の斤量恩恵、ルメール騎手という組み合わせで軸として不足なし。</p></div></li>
+        <li><span class="mark-symbol">○</span><div class="mark-body"><div class="mark-head"><span class="horse">タスティエーラ</span><span class="sire">3人気 6.2倍・父サトノクラウン</span><span class="verdict miss">着外</span></div><p>自身が2023年のダービー馬。父サトノクラウンはスタミナ・タフネスに定評のあるマルジュ系。レーン騎乗の安定感も評価。</p></div></li>
+        <li><span class="mark-symbol">▲</span><div class="mark-body"><div class="mark-head"><span class="horse">メイショウタバル</span><span class="sire">2人気 6.0倍・父ゴールドシップ</span><span class="verdict miss">着外</span></div><p>直近の宝塚記念(GI)勝ち馬で、逃げが確定的。単独マイペースに持ち込めれば粘り込みの目もあると評価したが、上がり勝負に沈んだ。</p></div></li>
+        <li><span class="mark-symbol">△</span><div class="mark-body"><div class="mark-head"><span class="horse">ミュージアムマイル</span><span class="sire">5人気 9.5倍・父リオンディーズ</span><span class="verdict hit">2着・的中</span></div><p>ダービーの2400mから本来の2000mへ戻るローテーションはプラス材料。母父ハーツクライで底力も裏付き。</p></div></li>
+        <li><span class="mark-symbol">△</span><div class="mark-body"><div class="mark-head"><span class="horse">シランケド</span><span class="sire">4人気 8.9倍・父デクラレーションオブウォー</span><span class="verdict miss">着外</span></div><p>マイル路線トップクラスの実績馬。父は欧州の大種牡馬で、上がり勝負への対応力を評価。</p></div></li>
+        <li><span class="mark-symbol">注</span><div class="mark-body"><div class="mark-head"><span class="horse">クイーンズウォーク／ジャスティンパレス</span><span class="verdict hit">3着・的中(ジャスティンパレス)</span></div><p>クイーンズウォークは金鯱賞(G2)勝ちの牝馬で上積み十分。ジャスティンパレスは父ディープインパクトの瞬発力を引く古馬で、一発の魅力を評価。</p></div></li>
+      </ul>
+      <div class="round-result">◎△△注の4点で <b>1・2・3着をすべてカバー</b>(◎1着、△2着、注3着)</div>
+    </div>
+
+    <div class="tab-panel" id="tenno-result">
+      <h2 class="panel-title">結果・答え合わせ</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>着</th><th>馬名</th><th>人気</th><th>予想印</th></tr></thead>
+          <tbody>
+            <tr class="result-hit"><td class="rank">1</td><td>マスカレードボール</td><td class="num">1人気</td><td>◎</td></tr>
+            <tr class="result-hit"><td class="rank">2</td><td>ミュージアムマイル</td><td class="num">5人気</td><td>△</td></tr>
+            <tr class="result-hit"><td class="rank">3</td><td>ジャスティンパレス</td><td class="num">8人気</td><td>注</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>◎○▲△△注の6点評価のうち、印をつけた馬で1〜3着を全てカバーできた。ダービー予想ログの最終版と同じく、<b>展開読み＋オッズ＋血統を組み合わせる型</b>が機能した形。一方でジャスティンパレスは「注」という最も弱い評価での的中であり、本命級の確信を持てていたわけではない点は正直に記録しておく。</p>
+      <div class="tip"><b>比べてみると：</b>ダービー(◎○△の3点で的中)と天皇賞秋(◎△注の3点で的中)は、いずれも「軸1頭＋展開・血統で浮上する中穴」という同じパターンで的中している。1鞍だけでは偶然の範囲を出ないが、方法論としての再現性は感じられる結果だった。</div>
+    </div>
+
+    <footer>
+      <h5>出典</h5>
+      <ul>
+        <li><a href="https://www.jra.go.jp/datafile/seiseki/g1/akiten/result/akiten2025.html" target="_blank" rel="noopener">2025年 天皇賞（秋） - JRA</a></li>
+        <li><a href="https://race.netkeiba.com/race/shutuba.html?race_id=202505041111" target="_blank" rel="noopener">天皇賞（秋）出馬表 - netkeiba</a></li>
+        <li><a href="https://umanity.jp/racedata/race_newsdet.php?nid=11857850" target="_blank" rel="noopener">天皇賞（秋）2025 前日オッズ - ウマニティ</a></li>
+        <li><a href="https://jra-van.jp/fun/tokusyu/g1/akiten/bloodline.html" target="_blank" rel="noopener">天皇賞（秋）2025 血統分析 - JRA-VAN</a></li>
+        <li><a href="https://www.yamaguchi-yoshino.com/entry/2025/11/05/203116" target="_blank" rel="noopener">天皇賞（秋）2025 レース回顧 - 山口吉野の競馬</a></li>
+      </ul>
+      <p class="fin-note">個人の学習用の予想ログです。血統・オッズの記述は代表的な情報源からの簡略化であり、正確な数値・血統表は一次情報(JBISサーチ・netkeiba等)で確認してください。</p>
+    </footer>
+
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var btns = document.querySelectorAll('.view-nav > .view-btn');
+  btns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      btns.forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.page > .view-panel').forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.view).classList.add('active');
+    });
+  });
+})();
+document.querySelectorAll('.view-panel').forEach(function(view){
+  var nav = view.querySelector(':scope > .tabs-nav');
+  if(!nav) return;
+  var tbtns = nav.querySelectorAll('.tab-btn');
+  tbtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      tbtns.forEach(function(b){ b.classList.remove('active'); });
+      view.querySelectorAll(':scope > .tab-panel').forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.target).classList.add('active');
+    });
+  });
+});
+</script>
+</body>
+</html>

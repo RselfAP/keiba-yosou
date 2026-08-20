@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>血統ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Shippori+Mincho:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f1ede0;
+  --surface:#fffdf7;
+  --surface-2:#e9e1c8;
+  --ink:#20281f;
+  --ink-soft:#5a6252;
+  --ink-faint:#8b9080;
+  --accent:#a8721c;
+  --accent-soft:#ecd9ab;
+  --green:#1f4d3a;
+  --green-soft:#d3e0cd;
+  --maroon:#8a3324;
+  --maroon-soft:#ecdcd4;
+  --line:#d7cdae;
+  --shadow:0 1px 2px rgba(32,40,31,.06), 0 8px 24px -12px rgba(32,40,31,.18);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#12160e;
+    --surface:#191d14;
+    --surface-2:#232819;
+    --ink:#ece6d3;
+    --ink-soft:#b6b099;
+    --ink-faint:#7d7c67;
+    --accent:#dcac52;
+    --accent-soft:#3a2f16;
+    --green:#5c9877;
+    --green-soft:#1d2a20;
+    --maroon:#d2846c;
+    --maroon-soft:#33221c;
+    --line:#333a28;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#12160e;
+  --surface:#191d14;
+  --surface-2:#232819;
+  --ink:#ece6d3;
+  --ink-soft:#b6b099;
+  --ink-faint:#7d7c67;
+  --accent:#dcac52;
+  --accent-soft:#3a2f16;
+  --green:#5c9877;
+  --green-soft:#1d2a20;
+  --maroon:#d2846c;
+  --maroon-soft:#33221c;
+  --line:#333a28;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+}
+
+*{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
+  line-height:1.85;
+  overflow-x:hidden;
+  font-feature-settings:'palt' 1;
+}
+::selection{background:var(--accent-soft); color:var(--ink);}
+
+.page{max-width:820px; margin:0 auto; padding:0 20px 100px;}
+
+/* ---------- hero ---------- */
+.hero{padding:56px 0 36px; border-bottom:1px solid var(--line);}
+.eyebrow{
+  font-family:'JetBrains Mono', monospace;
+  font-size:.72rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--accent); font-weight:700; margin:0 0 14px;
+}
+h1.title{
+  font-family:'Shippori Mincho', serif;
+  font-weight:800;
+  font-size:clamp(2.1rem, 6vw, 3rem);
+  line-height:1.25;
+  margin:0 0 14px;
+  text-wrap:balance;
+  color:var(--ink);
+}
+.dek{
+  font-size:1.05rem;
+  color:var(--ink-soft);
+  max-width:34em;
+  margin:0 0 20px;
+  text-wrap:balance;
+}
+.hero-meta{
+  display:flex; flex-wrap:wrap; gap:8px 18px;
+  font-family:'JetBrains Mono', monospace;
+  font-size:.78rem; color:var(--ink-faint);
+}
+
+/* ---------- toc ---------- */
+.toc{
+  margin:32px 0 8px;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:22px 24px;
+  box-shadow:var(--shadow);
+}
+.toc-title{
+  font-family:'Shippori Mincho', serif; font-weight:700;
+  font-size:.95rem; margin:0 0 12px; color:var(--ink);
+  display:flex; align-items:center; gap:8px;
+}
+.toc ol{margin:0; padding:0; list-style:none; columns:2; column-gap:28px;}
+.toc li{break-inside:avoid; margin-bottom:8px;}
+.toc a{
+  color:var(--ink-soft); text-decoration:none; font-size:.88rem;
+  display:flex; gap:8px;
+}
+.toc a:hover{color:var(--accent);}
+.toc-num{font-family:'JetBrains Mono', monospace; color:var(--accent); font-weight:700; flex-shrink:0;}
+@media (max-width:560px){ .toc ol{columns:1;} }
+
+/* ---------- sections ---------- */
+section.sec{padding:52px 0; border-bottom:1px solid var(--line);}
+section.sec:last-of-type{border-bottom:none;}
+.sec-head{display:flex; align-items:baseline; gap:14px; margin:0 0 18px;}
+.sec-num{
+  font-family:'JetBrains Mono', monospace; font-size:.85rem; font-weight:700;
+  color:var(--accent); flex-shrink:0;
+}
+h2.sec-title{
+  font-family:'Shippori Mincho', serif; font-weight:700;
+  font-size:clamp(1.35rem, 3.4vw, 1.7rem);
+  margin:0; color:var(--ink); text-wrap:balance;
+}
+.sec p{margin:0 0 16px; color:var(--ink);}
+.sec p.soft{color:var(--ink-soft);}
+h3.sub{
+  font-family:'Shippori Mincho', serif; font-weight:600; font-size:1.05rem;
+  margin:28px 0 12px; color:var(--ink);
+}
+.lead{font-size:1.02rem;}
+
+/* ---------- callout / note ---------- */
+.note{
+  border-left:3px solid var(--maroon);
+  background:var(--maroon-soft);
+  border-radius:0 8px 8px 0;
+  padding:14px 18px;
+  margin:20px 0;
+  font-size:.92rem;
+  color:var(--ink);
+}
+.note b{color:var(--maroon);}
+.tip{
+  border-left:3px solid var(--green);
+  background:var(--green-soft);
+  border-radius:0 8px 8px 0;
+  padding:14px 18px;
+  margin:20px 0;
+  font-size:.92rem;
+}
+.tip b{color:var(--green);}
+
+/* ---------- legend ---------- */
+.legend{display:flex; gap:18px; flex-wrap:wrap; font-size:.8rem; color:var(--ink-soft); margin:0 0 16px;}
+.legend span{display:inline-flex; align-items:center; gap:6px;}
+.dot{width:9px; height:9px; border-radius:50%; display:inline-block;}
+.dot.sire{background:var(--accent);}
+.dot.dam{background:var(--green);}
+
+/* ---------- tree diagram ---------- */
+.tree-wrap{overflow-x:auto; margin:8px 0 20px; padding:4px 2px;}
+.tree, .tree ul{list-style:none; margin:0; padding:0;}
+.tree{min-width:280px;}
+.tree ul{margin-left:18px; padding-left:18px; border-left:2px solid var(--line); margin-top:6px;}
+.tree li{position:relative; padding:5px 0;}
+.tree ul > li::before{
+  content:''; position:absolute; left:-18px; top:19px; width:18px; height:2px; background:var(--line);
+}
+.node{
+  display:inline-flex; flex-direction:column; gap:1px;
+  background:var(--surface); border:1px solid var(--line); border-radius:7px;
+  padding:7px 12px; font-size:.86rem; box-shadow:var(--shadow);
+}
+.node .role{font-family:'JetBrains Mono', monospace; font-size:.68rem; color:var(--ink-faint); letter-spacing:.02em;}
+.node .name{font-weight:700; color:var(--ink);}
+.node .meta{font-size:.74rem; color:var(--ink-faint);}
+.branch-sire > .node{border-left:3px solid var(--accent);}
+.branch-dam > .node{border-left:3px solid var(--green);}
+.branch-sire > ul{border-left-color:var(--accent);}
+.branch-dam > ul{border-left-color:var(--green);}
+.branch-sire > ul > li::before{background:var(--accent);}
+.branch-dam > ul > li::before{background:var(--green);}
+.root > .node{background:var(--surface-2); border-color:var(--ink-faint); font-size:.92rem;}
+
+/* lineage map tree (section 5) */
+.tree.lineage ul{margin-left:16px; padding-left:16px;}
+.tree.lineage .node.line-root{background:var(--surface-2); border-color:var(--accent);}
+.chips{display:flex; flex-wrap:wrap; gap:6px; margin-top:6px;}
+.chip{
+  font-size:.74rem; font-family:'JetBrains Mono', monospace;
+  background:var(--surface-2); border:1px solid var(--line); border-radius:99px;
+  padding:2px 10px; color:var(--ink-soft);
+}
+
+/* ---------- cards grid ---------- */
+.cards{display:grid; grid-template-columns:repeat(auto-fit, minmax(210px,1fr)); gap:14px; margin:8px 0 20px;}
+.card{
+  background:var(--surface); border:1px solid var(--line); border-radius:10px;
+  padding:18px; box-shadow:var(--shadow);
+}
+.card .card-eyebrow{font-family:'JetBrains Mono', monospace; font-size:.7rem; color:var(--accent); font-weight:700; letter-spacing:.05em;}
+.card h4{font-family:'Shippori Mincho', serif; margin:6px 0 8px; font-size:1.05rem;}
+.card p{font-size:.86rem; color:var(--ink-soft); margin:0 0 8px;}
+.card .ex{font-size:.78rem; color:var(--ink-faint);}
+.card .ex b{color:var(--ink-soft); font-weight:700;}
+
+/* ---------- table ---------- */
+.table-wrap{overflow-x:auto; margin:8px 0 20px; border:1px solid var(--line); border-radius:10px;}
+table{border-collapse:collapse; width:100%; min-width:560px; font-size:.86rem;}
+thead th{
+  text-align:left; font-family:'JetBrains Mono', monospace; font-weight:700;
+  font-size:.72rem; letter-spacing:.04em; text-transform:uppercase;
+  color:var(--ink-faint); background:var(--surface-2);
+  padding:10px 14px; border-bottom:1px solid var(--line);
+}
+tbody td{padding:9px 14px; border-bottom:1px solid var(--line); color:var(--ink); vertical-align:middle;}
+tbody tr:last-child td{border-bottom:none;}
+td.num{font-family:'JetBrains Mono', monospace; font-variant-numeric:tabular-nums; text-align:right;}
+td.rank{font-family:'JetBrains Mono', monospace; color:var(--ink-faint); text-align:right;}
+.bar-cell{display:flex; align-items:center; gap:10px;}
+.bar-track{flex:1; height:6px; background:var(--surface-2); border-radius:99px; overflow:hidden; min-width:60px;}
+.bar-fill{height:100%; background:var(--accent); border-radius:99px;}
+.tag{font-size:.72rem; color:var(--ink-faint);}
+
+/* ---------- takeaway ---------- */
+.steps{list-style:none; margin:8px 0 0; padding:0; display:grid; gap:14px;}
+.steps li{
+  display:flex; gap:14px; background:var(--surface); border:1px solid var(--line);
+  border-radius:10px; padding:16px 18px; box-shadow:var(--shadow);
+}
+.steps .n{
+  font-family:'Shippori Mincho', serif; font-weight:800; font-size:1.3rem; color:var(--accent);
+  flex-shrink:0; line-height:1;
+}
+.steps p{margin:0; font-size:.9rem; color:var(--ink-soft);}
+.steps b{color:var(--ink); font-weight:700;}
+
+/* ---------- footer ---------- */
+footer{padding:40px 0 0; color:var(--ink-faint); font-size:.78rem;}
+footer h5{font-family:'JetBrains Mono', monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft); margin:0 0 10px;}
+footer ul{margin:0 0 20px; padding-left:1.2em;}
+footer li{margin-bottom:5px;}
+footer a{color:var(--ink-faint);}
+footer a:hover{color:var(--accent);}
+.fin-note{border-top:1px solid var(--line); padding-top:16px; line-height:1.7;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <p class="eyebrow">個人学習ノート・2026年8月版</p>
+    <h1 class="title">血統ノート</h1>
+    <p class="dek">サラブレッドの血が何を伝え、何を伝えないのか。血統表の読み方から日本の主要血統地図、配合理論の限界まで、自分の理解を整理したメモ。</p>
+    <div class="hero-meta">
+      <span>作成 2026-08-20</span>
+      <span>出典は末尾に記載</span>
+    </div>
+  </div>
+
+  <nav class="toc">
+    <p class="toc-title">目次</p>
+    <ol>
+      <li><a href="#s1"><span class="toc-num">01</span>血統表の読み方</a></li>
+      <li><a href="#s2"><span class="toc-num">02</span>父から、母から</a></li>
+      <li><a href="#s3"><span class="toc-num">03</span>ニックス — 配合の相性</a></li>
+      <li><a href="#s4"><span class="toc-num">04</span>インブリード — 血の濃さ</a></li>
+      <li><a href="#s5"><span class="toc-num">05</span>日本の血統地図</a></li>
+      <li><a href="#s6"><span class="toc-num">06</span>リーディングサイアー</a></li>
+      <li><a href="#s7"><span class="toc-num">07</span>適性を見分ける</a></li>
+      <li><a href="#s8"><span class="toc-num">08</span>日本三大牝系</a></li>
+      <li><a href="#s9"><span class="toc-num">09</span>血統理論との向き合い方</a></li>
+      <li><a href="#s10"><span class="toc-num">10</span>実践への3つのポイント</a></li>
+    </ol>
+  </nav>
+
+  <!-- 01 -->
+  <section class="sec" id="s1">
+    <div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">血統表の読み方</h2></div>
+    <p class="lead">血統表は上段に父方、下段に母方を並べて描く。1代遡るごとに先祖の数は倍になり、2代で4頭、3代で8頭、4代で16頭というように広がっていく。父方の並びを「サイアーライン（父系）」、母方の並びを「牝系（ファミリーライン）」と呼ぶ。</p>
+    <p class="soft">実例として、ディープインパクトの3代血統表を簡略化して示す。父方（金）と母方（緑）で色分けした。</p>
+
+    <div class="legend">
+      <span><i class="dot sire"></i>父方のライン</span>
+      <span><i class="dot dam"></i>母方（牝系）のライン</span>
+    </div>
+
+    <div class="tree-wrap">
+      <ul class="tree">
+        <li class="root">
+          <div class="node"><span class="role">本馬</span><span class="name">ディープインパクト</span><span class="meta">2002年生・牡</span></div>
+          <ul>
+            <li class="branch-sire">
+              <div class="node"><span class="role">父</span><span class="name">サンデーサイレンス</span><span class="meta">米・1986年生</span></div>
+              <ul>
+                <li><div class="node"><span class="role">父父</span><span class="name">ヘイロー</span></div></li>
+                <li><div class="node"><span class="role">父母</span><span class="name">ウィッシングウェル</span></div></li>
+              </ul>
+            </li>
+            <li class="branch-dam">
+              <div class="node"><span class="role">母</span><span class="name">ウインドインハーヘア</span><span class="meta">愛・1991年生</span></div>
+              <ul>
+                <li><div class="node"><span class="role">母父</span><span class="name">アルザオ</span></div></li>
+                <li><div class="node"><span class="role">母母</span><span class="name">バーグクレア</span></div></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <p class="soft">母父アルザオはリファールの産駒で、リファールはノーザンダンサーの子。つまりディープインパクトは「父がサンデーサイレンス系、母方にノーザンダンサーの血」という配合になっている（この組み合わせの意味は03節で触れる）。</p>
+
+    <h3 class="sub">ファミリーナンバーという考え方</h3>
+    <p>1895年、イギリスの血統学者ブルース・ロウは、ダービー・セントレジャー・オークスの勝ち馬を多く出した牝系の順に1〜43号の番号を割り振った。この「ファミリーナンバー」は現在74号程度まで拡張され、牝系（母方の系譜）を識別する共通言語として今も使われている。</p>
+  </section>
+
+  <!-- 02 -->
+  <section class="sec" id="s2">
+    <div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title">父から、母から</h2></div>
+    <p class="lead">よく言われる経験則が「スピードは父から、スタミナ・底力は母から」というもの。父系（サイアーライン）の資質がそのまま出やすい一方、距離延長時の踏ん張りや成長力は母方の影響がより強く出るとされる。</p>
+    <p>ここで重要になるのが<b>母父（BMS = ブルードメアサイアー）</b>。繁殖牝馬自身の能力・適性は、その父（＝対象馬から見て母父）の影響を色濃く受けるとされ、父・母と並ぶ「三本目の柱」として扱われる。目安として父系影響60%・母系影響40%程度という説もあるが、あくまで感覚的な目安に過ぎない。</p>
+    <div class="tip"><b>実務的なポイント：</b>初出走馬や情報の少ない馬を見るときは、父の適性だけでなく「母父〜母母父」のラインまで確認すると、距離適性や馬場適性の手がかりが増える。</div>
+  </section>
+
+  <!-- 03 -->
+  <section class="sec" id="s3">
+    <div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title">ニックス — 配合の相性</h2></div>
+    <p class="lead">ニックスとは、特定の父系と特定の母父系を組み合わせたときに、優秀な産駒が出やすい傾向のこと。父系・母系それぞれの能力や適性で考えるのが配合の基本だが、そこに「相性」という経験則を重ねる考え方。</p>
+    <p>代表例としてよく語られるのが「サンデーサイレンス系（父）× ノーザンダンサー系（母父）」の組み合わせ。01節で見た通り、ディープインパクト自身がまさにこの型（父サンデーサイレンス × 母父ラインにノーザンダンサー＝リファール）で、米国型のスピードと欧州型の底力を併せ持つ配合とされる。</p>
+    <div class="note"><b>注意：</b>ニックスは「結果的に活躍馬が多く出た」という後付けの統計的傾向であり、同じ配合をすれば再現するという保証はない。血統理論の中でも特に俗説化しやすい分野とされる。</div>
+  </section>
+
+  <!-- 04 -->
+  <section class="sec" id="s4">
+    <div class="sec-head"><span class="sec-num">04</span><h2 class="sec-title">インブリード — 血の濃さ</h2></div>
+    <p class="lead">インブリード（近親配合）とは、血統表の中に同じ祖先が複数回登場すること。祖先から受け継ぐ血の割合は、両親がそれぞれ50%、祖父母が25%、曽祖父母が12.5%、四代前が6.25%というように、世代を遡るごとに半分になっていく。</p>
+    <h3 class="sub">「奇跡の血量」18.75%理論</h3>
+    <p>3代前と4代前の両方に同じ祖先が現れる配合（12.5% + 6.25% = 18.75%、通称「3×4クロス」）は、日本の血統理論で古くから「奇跡の血量」と呼ばれ重視されてきた。トキノミノル・コダマ・トウショウボーイなど、この型に当てはまる名馬が語られることが多い。</p>
+
+    <h3 class="sub">なぜ「5代目」まで見るのか</h3>
+    <p>JRA自身の用語解説でも、インブリードは「5代前までに同じ血統が複数登場するような配合」と定義されている。5代血統表を確認するのは俗説ではなく、業界標準の見方。理由は情報量と実用性のバランスにある。4代血統表は先祖30頭分の記載で済むが、5代血統表になると62頭分に膨れ上がる。これ以上遡ると記載量が急増して実用に耐えなくなるため、5代が「意味のある情報を拾える現実的な上限」とされている。</p>
+    <p class="soft">表記は「（馬名）の4×5」のように世代数の組み合わせで示し、同じ祖先が複数箇所に登場する場合は「5×5×5」のように数字を並べる。数字が小さいほど、その祖先の血が濃く効いていることになる。現代の主流血統はノーザンダンサーのような大系統が何世代にもわたって飽和しているため、3代・4代表記だけでは気づけないクロスが5代目に隠れていることも多い。5代目まで確認して初めて「実はこの馬、母方にも父方と同じ祖先が入っていた」と気づくケースがある。</p>
+    <div class="note"><b>注意：</b>血量の数字だけで能力の高さは説明できない。近親度が高すぎる配合はむしろ虚弱さや気性面のリスクを高めるとも言われ、あくまで数ある要素の一つとして見るべきもの。</div>
+  </section>
+
+  <!-- 05 -->
+  <section class="sec" id="s5">
+    <div class="sec-head"><span class="sec-num">05</span><h2 class="sec-title">日本の血統地図</h2></div>
+    <p class="lead">現在の日本競馬は、大きく3つの系統が主流を占める。それぞれの枝分かれを簡略化して示す（代表産駒は一例で網羅ではない）。</p>
+
+    <h3 class="sub">サンデーサイレンス系</h3>
+    <p class="soft">1990年代に輸入され、以後の日本競馬の主流となった系統。直仔だけで複数の分派を築いた。</p>
+    <div class="tree-wrap">
+      <ul class="tree lineage">
+        <li class="root">
+          <div class="node line-root"><span class="role">基幹種牡馬</span><span class="name">サンデーサイレンス</span><span class="meta">米・1986年生</span></div>
+          <ul>
+            <li><div class="node"><span class="name">ディープインパクト系</span><span class="meta">瞬発力・切れ味に優れる</span></div><div class="chips"><span class="chip">キズナ</span><span class="chip">サートゥルナーリア</span><span class="chip">キタサンブラック※全兄ブラックタイド産駒</span></div></li>
+            <li><div class="node"><span class="name">ハーツクライ系</span><span class="meta">総合力・持続力</span></div><div class="chips"><span class="chip">ジャスタウェイ</span><span class="chip">スワーヴリチャード</span></div></li>
+            <li><div class="node"><span class="name">ステイゴールド系</span><span class="meta">晩成・気性・タフさ</span></div><div class="chips"><span class="chip">オルフェーヴル</span><span class="chip">ゴールドシップ</span></div></li>
+            <li><div class="node"><span class="name">ダイワメジャー系</span><span class="meta">マイル〜中距離のスピード</span></div><div class="chips"><span class="chip">カレンブラックヒル</span></div></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <h3 class="sub">キングマンボ系（ミスタープロスペクター系）</h3>
+    <div class="tree-wrap">
+      <ul class="tree lineage">
+        <li class="root">
+          <div class="node line-root"><span class="role">基幹種牡馬</span><span class="name">キングマンボ</span><span class="meta">米</span></div>
+          <ul>
+            <li><div class="node"><span class="name">キングカメハメハ</span><span class="meta">日本で大成功</span></div>
+              <ul>
+                <li><div class="node"><span class="name">ロードカナロア</span></div></li>
+                <li><div class="node"><span class="name">ドゥラメンテ</span></div></li>
+                <li><div class="node"><span class="name">ルーラーシップ</span></div></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <h3 class="sub">ノーザンダンサー系（日本での流れ）</h3>
+    <p class="soft">80〜90年代はノーザンテーストが一時代を築いた。その後はフレンチデピュティ（ヴァイスリージェント経由の分派）の系統が定着。</p>
+    <div class="tree-wrap">
+      <ul class="tree lineage">
+        <li class="root">
+          <div class="node line-root"><span class="role">基幹種牡馬</span><span class="name">ノーザンダンサー</span><span class="meta">加</span></div>
+          <ul>
+            <li><div class="node"><span class="name">フレンチデピュティ</span></div>
+              <ul><li><div class="node"><span class="name">クロフネ</span><span class="meta">持込馬として活躍後に種牡馬入り</span></div></li></ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <p class="soft">このほか、シンボリクリスエス（→エピファネイア）に代表される「ロベルト系」も、少数ながら日本の重賞戦線で存在感を保っている。</p>
+  </section>
+
+  <!-- 06 -->
+  <section class="sec" id="s6">
+    <div class="sec-head"><span class="sec-num">06</span><h2 class="sec-title">リーディングサイアー（スナップショット）</h2></div>
+    <p class="lead">2026年8月17日時点、獲得賞金順の上位10頭。あくまで調査時点の一場面であり、常に順位は動く。最新値はJBISサーチやnetkeiba血統データベースで確認するのが確実。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>順位</th><th>種牡馬</th><th>系統</th><th>獲得賞金</th></tr></thead>
+        <tbody>
+          <tr><td class="rank">1</td><td>キズナ</td><td class="tag">ディープインパクト系</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>25.7億円</div></td></tr>
+          <tr><td class="rank">2</td><td>ロードカナロア</td><td class="tag">キングマンボ系</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:95%"></div></div>24.4億円</div></td></tr>
+          <tr><td class="rank">3</td><td>キタサンブラック</td><td class="tag">サンデーサイレンス系</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:92%"></div></div>23.8億円</div></td></tr>
+          <tr><td class="rank">4</td><td>エピファネイア</td><td class="tag">ロベルト系</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:72%"></div></div>18.5億円</div></td></tr>
+          <tr><td class="rank">5</td><td>ドレフォン</td><td class="tag">米国型</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:53%"></div></div>13.7億円</div></td></tr>
+          <tr><td class="rank">6</td><td>レイデオロ</td><td class="tag">キングマンボ系</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:50%"></div></div>12.8億円</div></td></tr>
+          <tr><td class="rank">7</td><td>サートゥルナーリア</td><td class="tag">キングマンボ系</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:49%"></div></div>12.6億円</div></td></tr>
+          <tr><td class="rank">8</td><td>モーリス</td><td class="tag">グラスワンダー系</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:42%"></div></div>10.7億円</div></td></tr>
+          <tr><td class="rank">9</td><td>ゴールドシップ</td><td class="tag">ステイゴールド系</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:39%"></div></div>9.9億円</div></td></tr>
+          <tr><td class="rank">10</td><td>ドゥラメンテ</td><td class="tag">キングマンボ系</td><td class="num"><div class="bar-cell"><div class="bar-track"><div class="bar-fill" style="width:38%"></div></div>9.8億円</div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 07 -->
+  <section class="sec" id="s7">
+    <div class="sec-head"><span class="sec-num">07</span><h2 class="sec-title">適性を見分ける</h2></div>
+    <p class="lead">血統から読める適性は、おおまかに3つのタイプに分けられる。</p>
+    <div class="cards">
+      <div class="card">
+        <p class="card-eyebrow">TYPE 01</p>
+        <h4>スピード型</h4>
+        <p>芝の短距離〜マイル。切れ味・瞬発力の勝負に強い。</p>
+        <p class="ex"><b>代表：</b>ディープインパクト系、ダイワメジャー系</p>
+      </div>
+      <div class="card">
+        <p class="card-eyebrow">TYPE 02</p>
+        <h4>スタミナ型</h4>
+        <p>中長距離やタフな流れに強い。長く脚を使える持続力。</p>
+        <p class="ex"><b>代表：</b>ステイゴールド系、欧州型の牝系</p>
+      </div>
+      <div class="card">
+        <p class="card-eyebrow">TYPE 03</p>
+        <h4>パワー型</h4>
+        <p>ダート・重馬場・小回りコースで地力を発揮。</p>
+        <p class="ex"><b>代表：</b>ヘニーヒューズ、ドレフォンなど米国ダート系</p>
+      </div>
+    </div>
+    <p class="soft">重馬場・不良馬場では瞬発力よりパワーと持続力が問われるため、上記のパワー型やダート実績のある血統が浮上しやすい。初出走馬の適性は、父母の傾向に加えて兄弟馬の実績・厩舎のデビュー距離の選び方からも類推できる。</p>
+  </section>
+
+  <!-- 08 -->
+  <section class="sec" id="s8">
+    <div class="sec-head"><span class="sec-num">08</span><h2 class="sec-title">日本三大牝系</h2></div>
+    <p class="lead">1907年、小岩井農場がイギリスから輸入した基礎牝馬に由来する3系統が、日本競馬の牝系の礎とされる。</p>
+    <div class="cards">
+      <div class="card">
+        <p class="card-eyebrow">12号族</p>
+        <h4>ビューチフルドリーマー系</h4>
+        <p>他を圧倒する底力と成長力。スタミナと勝負根性に優れる。</p>
+        <p class="ex"><b>代表：</b>シンザン、テイエムオーシャン、ヴィルシーナ</p>
+      </div>
+      <div class="card">
+        <p class="card-eyebrow">3号族</p>
+        <h4>フロリースカップ系</h4>
+        <p>在来牝系ながら現代競馬にも通用するスピード能力。</p>
+        <p class="ex"><b>代表：</b>スペシャルウィーク、ウオッカ</p>
+      </div>
+      <div class="card">
+        <p class="card-eyebrow">7号族</p>
+        <h4>アストニシメント系</h4>
+        <p>無尽蔵のスタミナを誇るステイヤー血統。長距離・重馬場に強い。</p>
+        <p class="ex"><b>代表：</b>メジロマックイーン</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 -->
+  <section class="sec" id="s9">
+    <div class="sec-head"><span class="sec-num">09</span><h2 class="sec-title">血統理論との向き合い方</h2></div>
+    <p class="lead">サラブレッド生産の歴史は3世紀を超えるが、血統理論はいまだ科学というより経験則・言い伝えの域を出ない部分が大きいと指摘される。母数の少なさや「活躍馬」の定義の曖昧さが、統計的な検証を難しくしているためだ。</p>
+    <p class="soft">ニックスも奇跡の血量も、実際には「たまたま活躍馬が出た組み合わせ」を後から言語化したものが多く、因果関係の証明にはなっていない。</p>
+    <div class="note"><b>スタンス：</b>血統は「絶対的な予言」ではなく「馬を理解するための補助線」として使うのが実践的。断定を避け、他の情報（近走・関係者談話・調教など）と組み合わせて見るのが良さそう。</div>
+  </section>
+
+  <!-- 10 -->
+  <section class="sec" id="s10" style="border-bottom:none;">
+    <div class="sec-head"><span class="sec-num">10</span><h2 class="sec-title">実践への3つのポイント</h2></div>
+    <ul class="steps">
+      <li><span class="n">1</span><p><b>父だけでなく母父まで見る。</b>距離延長やタフな馬場でのスタミナは、母方（特にBMS）の影響が強く出やすい。</p></li>
+      <li><span class="n">2</span><p><b>初出走馬は「血統＋周辺情報」で補完する。</b>父母の適性に加え、兄弟馬の実績や厩舎のデビュー戦の選び方も手がかりになる。</p></li>
+      <li><span class="n">3</span><p><b>断定しない。</b>ニックスやインブリードの「理論」は後付けの傾向に過ぎない。血統は数ある判断材料の一つとして、控えめに扱うのが実践的。</p></li>
+    </ul>
+  </section>
+
+  <footer>
+    <h5>出典</h5>
+    <ul>
+      <li><a href="https://ja.wikipedia.org/wiki/競走馬の血統" target="_blank" rel="noopener">競走馬の血統 - Wikipedia</a></li>
+      <li><a href="https://ja.wikipedia.org/wiki/サンデーサイレンス系" target="_blank" rel="noopener">サンデーサイレンス系 - Wikipedia</a></li>
+      <li><a href="https://ja.wikipedia.org/wiki/ノーザンダンサー系" target="_blank" rel="noopener">ノーザンダンサー系 - Wikipedia</a></li>
+      <li><a href="https://koudoukeibagaku.jp/keiba-pedigree-female-line/" target="_blank" rel="noopener">競馬の血統は牝系が鍵！日本三大牝系からデータ分析まで徹底解説</a></li>
+      <li><a href="https://keiba-ezo.com/news/3628" target="_blank" rel="noopener">2026年リーディングサイアー - KEIBA EZO</a></li>
+      <li><a href="https://www.just-research.com/keiba_hisshoho/blood/" target="_blank" rel="noopener">系統別の説明 - 馬券名人養成プログラム</a></li>
+      <li><a href="https://spa-gourmet.shop/bloodline/" target="_blank" rel="noopener">競馬血統分析ラボ</a></li>
+      <li><a href="https://www.jra.go.jp/kouza/yougo/w471.html" target="_blank" rel="noopener">インブリード（競馬用語辞典）- JRA</a></li>
+    </ul>
+    <p class="fin-note">個人の学習用に情報を整理したメモです。系統や産駒の例は代表的なものに絞った簡略化であり網羅ではありません。賞金額などの数値は調査時点のスナップショットのため、判断材料として使う場合は一次情報（JBISサーチ・netkeiba等）で必ず裏取りしてください。</p>
+  </footer>
+
+</div>
+</body>
+</html>
