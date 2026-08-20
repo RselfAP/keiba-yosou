@@ -133,14 +133,15 @@ footer a:hover{color:var(--accent);}
   <!-- ============================================================ -->
   <div class="view-panel active" id="view-derby">
 
-    <p class="dek" style="margin-bottom:16px;">2025年の日本ダービーを、当時の出走情報・血統・展開・オッズだけを材料にAIで予想した記録。1回で終わらせず、「何を見落としたか」を都度点検しながら3段階でやり直した過程をそのまま残す。</p>
+    <p class="dek" style="margin-bottom:16px;">2025年の日本ダービーを、当時の出走情報・血統・トライアル結果・展開・馬場・オッズ・騎手実績だけを材料にAIで予想した記録。最終的に到達した予想根拠を4タブでまとめ、そこへ至るまでの3段階の試行錯誤は「検討過程」タブに残した。</p>
     <div class="note"><b>正直に：</b>「結果を見ずに予想する」つもりで検索したところ、1件目のスニペットに着順が含まれていて避けようもなく見えてしまった。完全な盲検ではなくなったが、「知った上で、それでも予想プロセスと根拠は素直に組み立てる」という条件で続行した。</div>
 
     <div class="tabs-nav">
       <button class="tab-btn active" data-target="derby-field"><span class="tab-idx">01</span>出走馬・血統</button>
-      <button class="tab-btn" data-target="derby-progress"><span class="tab-idx">02</span>予想の進化(1→3回)</button>
-      <button class="tab-btn" data-target="derby-result"><span class="tab-idx">03</span>結果</button>
-      <button class="tab-btn" data-target="derby-lessons"><span class="tab-idx">04</span>学び</button>
+      <button class="tab-btn" data-target="derby-pace"><span class="tab-idx">02</span>展開・馬場</button>
+      <button class="tab-btn" data-target="derby-picks"><span class="tab-idx">03</span>予想印</button>
+      <button class="tab-btn" data-target="derby-result"><span class="tab-idx">04</span>結果・答え合わせ</button>
+      <button class="tab-btn" data-target="derby-progress"><span class="tab-idx">05</span>検討過程</button>
     </div>
 
     <div class="tab-panel active" id="derby-field">
@@ -174,8 +175,33 @@ footer a:hover{color:var(--accent);}
       <p class="soft">緑背景の2頭(＋無印だったショウヘイ)が実際の掲示板(1〜3着)。皐月賞(4/20・中山2000m)は「急加速→スロー→再加速」というタフなラップで、上位3頭(ミュージアムマイル・クロワデュノール・マスカレードボール)はこの中で脚を溜めて爆発させた本物の脚力という裏付けが取れる。</p>
     </div>
 
+    <div class="tab-panel" id="derby-pace">
+      <h2 class="panel-title">展開・馬場</h2>
+      <p>明確な逃げ馬が不在で、レースはスロー濃厚と読めた。内枠のショウヘイが単独に近い形でハナを取りに行ける唯一の逃げ候補で、先行できる馬に展開利が生じやすい隊列が想定された。東京芝2400mは長い直線での瞬発力勝負になりやすいが、スローで折り合った先行馬が残る余地も大きいコース。</p>
+      <h3 class="sub">馬場</h3>
+      <p class="soft">当日は良馬場だが水分が残り、瞬発力一辺倒より持続力型が生きる状態と読んだ。血統ノートの整理でいえば、上がりだけの切れ味勝負ではなく「長く脚を使えるスタミナ寄りの馬」に寄る馬場読みになる。</p>
+      <h3 class="sub">前哨・皐月賞のラップ(参考情報)</h3>
+      <p class="soft">前哨の皐月賞(4/20・中山2000m)は「急加速→スロー→再加速」というタフなラップで、上位3頭(ミュージアムマイル・クロワデュノール・マスカレードボール)はこの中で脚を溜めて爆発させた本物の脚力という裏付けが取れていた。距離が2400mに延びる本番では、このスタミナ資質がさらに生きると見た。</p>
+      <div class="tip"><b>読み：</b>逃げ馬不在でスロー→持続力勝負なら、軸はスタミナ血統の実力馬。加えて内枠から先行できるショウヘイのような馬が、展開の恩恵で上位に食い込む余地がある。</div>
+    </div>
+
+    <div class="tab-panel" id="derby-picks">
+      <h2 class="panel-title">予想印とその根拠</h2>
+      <p class="soft">血統・皐月賞のトライアル結果・展開(スロー→持続力)・馬場・前日オッズ・騎手のダービー通算成績・皐月賞のラップ分析をすべて重ねた最終評価。騎手のダービー成績は武豊=歴代最多6勝／ミルコデムーロ=2勝／川田・ルメール=各1勝／北村友一・坂井瑠星=ともに未勝利という前提を加味している。</p>
+      <ul class="marks">
+        <li><span class="mark-symbol">◎</span><div class="mark-body"><div class="mark-head"><span class="horse">クロワデュノール</span><span class="sire">1人気 2.5倍・父キタサンブラック</span><span class="verdict hit">1着・的中</span></div><p>前年2歳王者。父は長距離G1を総なめにしたスタミナ血統で、母父ケープクロスも底力型。スローの持続力勝負・水分残りの馬場という展開読みに血統がきれいに噛み合う。市場も1番人気で、展開・血統・オッズが一点に集まる軸。北村友一騎手はダービー未勝利だが経験十分で不安材料にはならないと判断。</p></div></li>
+        <li><span class="mark-symbol">○</span><div class="mark-body"><div class="mark-head"><span class="horse">マスカレードボール</span><span class="sire">2人気 6.7倍・父ドゥラメンテ</span><span class="verdict hit">2着・的中</span></div><p>市場2番人気。タフな皐月賞を3着で乗り切った脚力を評価。成長曲線が右肩上がりで、持続力勝負でも崩れない地力を対抗に。</p></div></li>
+        <li><span class="mark-symbol">▲</span><div class="mark-body"><div class="mark-head"><span class="horse">サトノシャイニング</span><span class="sire">5人気 11.8倍・父キズナ</span><span class="verdict miss">着外</span></div><p>父がダービー馬本人という「メンバー屈指のダービー血統」に、史上最多6勝の武豊騎手という、血統・展開だけでは出てこない補正材料を重ねて格上げ。結果は伸びきれず着外。</p></div></li>
+        <li><span class="mark-symbol">△</span><div class="mark-body"><div class="mark-head"><span class="horse">ショウヘイ</span><span class="sire">6人気 12.5倍・父サートゥルナーリア</span><span class="verdict hit">3着・的中</span></div><p>内枠から単独に近い逃げが打てる唯一の逃げ候補で、展開読みと「妙味のある中穴」という市場評価が一致。スロー先行有利の恩恵をそのまま享受できる一頭として印を回した。</p></div></li>
+        <li><span class="mark-symbol">△</span><div class="mark-body"><div class="mark-head"><span class="horse">ミュージアムマイル</span><span class="sire">3人気 7.7倍・父リオンディーズ</span><span class="verdict miss">着外</span></div><p>皐月賞馬で市場3番人気を維持。母父ハーツクライのスタミナがタフな馬場に合うと判断し、皐月賞の速い流れを差し切った脚力は本物と見たが、本番では着外。</p></div></li>
+        <li><span class="mark-symbol">注</span><div class="mark-body"><div class="mark-head"><span class="horse">ジョバンニ</span><span class="sire">7人気 12.6倍・父エピファネイア</span><span class="verdict miss">着外</span></div><p>先行有利の展開なら浮上の目がある一頭として押さえ。結果は届かず。</p></div></li>
+      </ul>
+      <div class="round-result">◎○△の3点だけで <b>1・2・3着を全て的中</b>。オッズという「集合知」と自分の読みが一致していたことを確認できた。</div>
+    </div>
+
     <div class="tab-panel" id="derby-progress">
-      <h2 class="panel-title">予想の進化：1回目→2回目→3回目</h2>
+      <h2 class="panel-title">検討過程：予想の進化(1回目→2回目→3回目)</h2>
+      <p class="soft">上の「予想印」タブが最終的に到達した結論だが、そこへは一度で辿り着いたわけではない。1回で終わらせず「何を見落としたか」を都度点検しながら3段階でやり直した過程を、各ラウンドの予想印・的中不的中・何を考慮して改善したかまで、そのまま残す。</p>
 
       <h3 class="sub">1回目：皐月賞の着順＋父馬のみ</h3>
       <p class="soft">18頭中11頭の父馬しか確認できておらず、母父・展開・オッズは未着手だった段階。</p>
@@ -212,29 +238,29 @@ footer a:hover{color:var(--accent);}
         <li><span class="mark-symbol">注</span><div class="mark-body"><div class="mark-head"><span class="horse">ジョバンニ</span><span class="sire">7人気 12.6倍</span><span class="verdict miss">着外</span></div><p>先行有利の展開なら浮上の目。</p></div></li>
       </ul>
       <div class="round-result">◎○△の3点だけで <b>1・2・3着を全て的中</b>。オッズという「集合知」と自分の読みが一致していたことを確認できた。</div>
-    </div>
 
-    <div class="tab-panel" id="derby-result">
-      <h2 class="panel-title">結果</h2>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>着</th><th>馬名</th><th>人気</th><th>1回目</th><th>2回目</th><th>3回目</th></tr></thead>
-          <tbody>
-            <tr class="result-hit"><td class="rank">1</td><td>クロワデュノール</td><td class="num">1人気</td><td>◎</td><td>◎</td><td>◎</td></tr>
-            <tr class="result-hit"><td class="rank">2</td><td>マスカレードボール</td><td class="num">2人気</td><td>△</td><td>△</td><td>○</td></tr>
-            <tr class="result-hit"><td class="rank">3</td><td>ショウヘイ</td><td class="num">6人気</td><td class="tag">無印</td><td>△</td><td>△</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="tab-panel" id="derby-lessons">
-      <h2 class="panel-title">学び</h2>
+      <h3 class="sub">3ラウンドを通して見えた学び</h3>
       <ul class="steps">
         <li><span class="n">1</span><p><b>展開読みが一番効いた。</b>「逃げ馬不在→スロー→内枠の先行馬に展開利」という一点の発見だけで、1回目で完全に逃していた3着馬を拾えるようになった。血統や戦績よりも即効性のある補正だった。</p></li>
         <li><span class="n">2</span><p><b>オッズは「答え合わせ」であり「予想の代わり」ではない。</b>市場の人気とほぼ一致した結果になったのは、このレースが比較的堅い決着だったから。オッズだけに頼っていたら、なぜその評価なのかという理解は残らなかった。</p></li>
         <li><span class="n">3</span><p><b>それでも馬体重・パドック気配・調教内容は最後まで届かなかった。</b>3回目の版でも「実務的にはほぼ十分」止まりで、完全な再現ではない。<a href="血統ノート.html#s9">血統ノートの09節</a>で書いた「血統は補助線であって答えではない」というスタンスは、展開やオッズを足しても変わらなかった。</p></li>
       </ul>
+    </div>
+
+    <div class="tab-panel" id="derby-result">
+      <h2 class="panel-title">結果・答え合わせ</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>着</th><th>馬名</th><th>人気</th><th>予想印</th></tr></thead>
+          <tbody>
+            <tr class="result-hit"><td class="rank">1</td><td>クロワデュノール</td><td class="num">1人気</td><td>◎</td></tr>
+            <tr class="result-hit"><td class="rank">2</td><td>マスカレードボール</td><td class="num">2人気</td><td>○</td></tr>
+            <tr class="result-hit"><td class="rank">3</td><td>ショウヘイ</td><td class="num">6人気</td><td>△</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>最終版の◎○▲△△注の6点評価のうち、◎○△の3点で1〜3着をすべて拾えた。<b>「逃げ馬不在→スロー→持続力勝負」という展開読みを軸に置き、血統(スタミナ型)とオッズを重ねる型</b>が機能した形。3着ショウヘイは1回目では無印だったが、展開分析を足したことで△まで引き上げられた——ここが検討過程で最も効いた補正だった。</p>
+      <div class="tip"><b>比べてみると：</b>ダービー(◎○△の3点で的中)と天皇賞秋(◎△注の3点で的中)は、いずれも「軸1頭＋展開・血統で浮上する中穴」という同じパターンで的中している。1鞍だけでは偶然の範囲を出ないが、方法論としての再現性は感じられる結果だった。</div>
     </div>
 
     <footer>
