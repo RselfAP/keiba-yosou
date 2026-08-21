@@ -1,0 +1,741 @@
+<title>重賞ウォッチ 8/23</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+:root{
+  --bg:#EFEAE0;
+  --card:#FBFAF5;
+  --card-2:#F3EFE4;
+  --ink:#20241F;
+  --muted:#6B6B60;
+  --accent:#234A34;
+  --accent-2:#B23A2E;
+  --line:#D6D0C0;
+  --waku1-bg:#FFFFFF; --waku1-fg:#20241F; --waku1-bd:#8A8578;
+  --waku2-bg:#1A1A1A; --waku2-fg:#FFFFFF; --waku2-bd:#1A1A1A;
+  --waku3-bg:#D6392F; --waku3-fg:#FFFFFF; --waku3-bd:#D6392F;
+  --waku4-bg:#1E5FBF; --waku4-fg:#FFFFFF; --waku4-bd:#1E5FBF;
+  --waku5-bg:#EDBF00; --waku5-fg:#20241F; --waku5-bd:#EDBF00;
+  --waku6-bg:#2E9B4F; --waku6-fg:#FFFFFF; --waku6-bd:#2E9B4F;
+  --waku7-bg:#EC8A1E; --waku7-fg:#FFFFFF; --waku7-bd:#EC8A1E;
+  --waku8-bg:#F0A8C8; --waku8-fg:#20241F; --waku8-bd:#F0A8C8;
+}
+/* ダークモード追従を無効化: 常にライトパレット固定 */
+
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"Zen Kaku Gothic New","Noto Sans JP",sans-serif;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px 80px;}
+
+header.top{
+  padding:56px 0 36px;
+  border-bottom:3px solid var(--ink);
+  margin-bottom:40px;
+}
+.eyebrow{
+  font-size:0.78rem;
+  letter-spacing:0.16em;
+  color:var(--accent);
+  font-weight:700;
+  margin:0 0 10px;
+}
+h1{
+  font-family:"Shippori Mincho",serif;
+  font-size:clamp(2rem,5vw,2.9rem);
+  font-weight:700;
+  margin:0 0 14px;
+  text-wrap:balance;
+  letter-spacing:0.02em;
+}
+.sub{
+  color:var(--muted);
+  font-size:0.98rem;
+  max-width:60ch;
+  margin:0 0 16px;
+}
+.update-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px 20px;
+  font-size:0.78rem;
+  color:var(--muted);
+}
+.update-meta strong{
+  color:var(--ink);
+  font-weight:700;
+}
+
+.notice{
+  background:var(--card-2);
+  border:1px solid var(--line);
+  border-left:4px solid var(--accent-2);
+  border-radius:4px;
+  padding:12px 20px;
+  margin-bottom:40px;
+  font-size:0.88rem;
+  color:var(--ink);
+}
+.notice[open]{padding-bottom:18px;}
+.notice summary{
+  cursor:pointer;
+  font-weight:700;
+  font-size:0.86rem;
+  color:var(--ink);
+  list-style:none;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 0;
+}
+.notice summary::-webkit-details-marker{display:none;}
+.notice summary::before{
+  content:"▸";
+  color:var(--accent-2);
+  display:inline-block;
+  transition:transform .15s ease;
+  font-size:0.78rem;
+}
+.notice[open] summary::before{transform:rotate(90deg);}
+.notice p{margin:12px 0 0;}
+.notice strong{color:var(--accent-2);}
+
+.tabs{
+  display:flex;
+  gap:4px;
+  overflow-x:auto;
+  margin-bottom:36px;
+  border-bottom:1px solid var(--line);
+}
+.tab-btn{
+  display:flex;
+  align-items:center;
+  font-family:"Shippori Mincho",serif;
+  font-size:1rem;
+  font-weight:700;
+  color:var(--muted);
+  background:transparent;
+  border:none;
+  padding:12px 18px;
+  cursor:pointer;
+  white-space:nowrap;
+  border-bottom:3px solid transparent;
+  transition:color .15s ease, border-color .15s ease;
+}
+.tab-btn:hover{color:var(--ink);}
+.tab-btn:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
+.tab-btn.active{color:var(--ink);border-bottom-color:var(--accent-2);}
+.tab-grade{
+  font-family:"Zen Kaku Gothic New","Noto Sans JP",sans-serif;
+  font-size:0.66rem;
+  font-weight:700;
+  color:var(--accent-2);
+  margin-right:7px;
+  letter-spacing:0.03em;
+}
+
+section.race{margin-bottom:64px;}
+.race-panel[hidden]{display:none;}
+.race-head{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  flex-wrap:wrap;
+  border-bottom:1px solid var(--line);
+  padding-bottom:14px;
+  margin-bottom:22px;
+}
+.grade-badge{
+  font-family:"Shippori Mincho",serif;
+  font-weight:700;
+  font-size:0.82rem;
+  color:#fff;
+  background:var(--accent-2);
+  padding:3px 10px;
+  border-radius:2px;
+  letter-spacing:0.05em;
+}
+.race-head h2{
+  font-family:"Shippori Mincho",serif;
+  font-size:1.7rem;
+  margin:0;
+  font-weight:700;
+}
+.race-meta{
+  color:var(--muted);
+  font-size:0.88rem;
+  margin-left:auto;
+}
+
+.pick-info{
+  background:var(--card-2);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:16px 20px;
+  margin-bottom:24px;
+}
+.pick-info-head{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:baseline;
+  gap:4px 10px;
+  margin-bottom:12px;
+}
+.pick-info-title{
+  font-family:"Shippori Mincho",serif;
+  font-weight:700;
+  font-size:0.9rem;
+  white-space:nowrap;
+}
+.pick-info-sub{
+  font-size:0.72rem;
+  color:var(--muted);
+}
+.pick-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.pick-row{
+  display:grid;
+  grid-template-columns:1.6em 1fr;
+  column-gap:12px;
+  row-gap:2px;
+  font-size:0.86rem;
+}
+.pick-mark{
+  grid-row:1 / 3;
+  font-weight:700;
+  font-size:1.05rem;
+  text-align:center;
+  line-height:1.5;
+}
+.pick-mark.m-honmei{color:var(--accent-2);}
+.pick-mark.m-taikou{color:var(--accent);}
+.pick-mark.m-tana{color:var(--ink);}
+.pick-mark.m-renka{color:var(--muted);}
+.pick-horse{grid-column:2;font-weight:700;}
+.pick-reason{grid-column:2;color:var(--muted);}
+
+.mark-cell{
+  text-align:center;
+  font-weight:700;
+  font-size:1rem;
+}
+.mark-cell.m-honmei{color:var(--accent-2);}
+.mark-cell.m-taikou{color:var(--accent);}
+.mark-cell.m-tana{color:var(--ink);}
+.mark-cell.m-renka{color:var(--muted);}
+
+.course-info{
+  display:flex;
+  gap:20px;
+  align-items:flex-start;
+  flex-wrap:wrap;
+  background:var(--card-2);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:16px 20px;
+  margin-bottom:24px;
+}
+.course-specs{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  flex-shrink:0;
+  max-width:100%;
+}
+.spec{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:4px;
+  padding:6px 12px;
+  min-width:64px;
+}
+.spec-label{
+  font-size:0.64rem;
+  letter-spacing:0.06em;
+  color:var(--muted);
+  margin-bottom:2px;
+}
+.spec-value{
+  font-size:0.92rem;
+  font-weight:700;
+  font-variant-numeric:tabular-nums;
+}
+.course-note{
+  margin:0;
+  font-size:0.84rem;
+  color:var(--muted);
+  flex:1;
+  min-width:220px;
+  line-height:1.75;
+}
+
+.table-scroll{overflow-x:auto;margin-bottom:28px;border:1px solid var(--line);border-radius:6px;}
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:0.86rem;
+  min-width:780px;
+  background:var(--card);
+}
+thead th{
+  text-align:left;
+  font-weight:700;
+  font-size:0.72rem;
+  letter-spacing:0.06em;
+  color:var(--muted);
+  padding:10px 12px;
+  border-bottom:1px solid var(--line);
+  white-space:nowrap;
+}
+tbody td{
+  padding:9px 12px;
+  border-bottom:1px solid var(--line);
+  white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover{background:var(--card-2);}
+.waku{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:26px;height:26px;
+  border-radius:50%;
+  font-weight:700;
+  font-size:0.82rem;
+  border:1px solid;
+}
+.horse-name{font-weight:700;}
+.horse-name a,
+.jockey-link{
+  color:inherit;
+  text-decoration:none;
+  border-bottom:1px dotted var(--accent);
+}
+.horse-name a:hover,
+.jockey-link:hover{
+  color:var(--accent-2);
+  border-bottom-color:var(--accent-2);
+}
+.num-badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:20px;
+  height:20px;
+  padding:0 4px;
+  border-radius:4px;
+  background:var(--line);
+  color:var(--muted);
+  font-size:0.7rem;
+  font-weight:700;
+  margin-right:6px;
+  vertical-align:middle;
+  font-variant-numeric:tabular-nums;
+}
+.fav{
+  display:inline-block;
+  margin-left:6px;
+  font-size:0.68rem;
+  color:var(--accent-2);
+  border:1px solid var(--accent-2);
+  border-radius:2px;
+  padding:0px 5px;
+  vertical-align:middle;
+  letter-spacing:0.02em;
+}
+
+.comments-label{
+  font-size:0.78rem;
+  letter-spacing:0.08em;
+  color:var(--muted);
+  font-weight:700;
+  margin:0 0 14px;
+}
+.comment-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:14px;
+}
+.comment-card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:16px 18px;
+}
+.comment-card .horse{
+  font-weight:700;
+  font-size:0.96rem;
+  margin-bottom:4px;
+}
+.comment-card .who{
+  font-size:0.76rem;
+  color:var(--accent);
+  font-weight:700;
+  margin-bottom:8px;
+}
+.comment-card blockquote{
+  margin:0;
+  font-size:0.86rem;
+  color:var(--ink);
+  border-left:2px solid var(--line);
+  padding-left:10px;
+}
+.no-comment{
+  font-size:0.8rem;
+  color:var(--muted);
+  padding:10px 4px;
+}
+
+footer{
+  margin-top:56px;
+  padding-top:24px;
+  border-top:1px solid var(--line);
+  font-size:0.78rem;
+  color:var(--muted);
+}
+footer h3{
+  font-size:0.76rem;
+  letter-spacing:0.08em;
+  color:var(--muted);
+  margin:0 0 10px;
+  font-weight:700;
+}
+footer ul{margin:0 0 20px;padding-left:18px;}
+footer li{margin-bottom:4px;}
+footer a{color:var(--accent);}
+footer a:hover{color:var(--accent-2);}
+.disclaimer-foot{margin-top:20px;line-height:1.8;}
+</style>
+
+<div class="wrap">
+
+<header class="top">
+  <p class="eyebrow">中央競馬 今週の重賞 / 2026年8月23日（日）</p>
+  <h1>重賞ウォッチ ─ 新潟2歳S・キーンランドC</h1>
+  <p class="sub">出走予定馬・調教師や厩舎関係者の談話をレースごとに整理。追い切り本番データはレース前日13時公開のため、現時点（8/21時点の取材談話）の情報でまとめています。</p>
+  <div class="update-meta">
+    <span><strong>最終更新:</strong> 2026年8月21日(金) 10:11(日本時間)</span>
+    <span><strong>次回の自動更新:</strong> 差分更新は3時間おき(毎日0・3・6・9・12・15・18・21時ごろ)／対象レースの週次切替は毎週月曜5時ごろ</span>
+  </div>
+</header>
+
+<details class="notice">
+  <summary>このページについて・免責事項（タップして表示）</summary>
+  <p><strong>このページの位置づけ：</strong>ネット上の競馬メディア（JRA公式・netkeiba・umanity・スポーツ紙等）を横断的に検索し、AIが要約・整理したものです。出走馬・騎手は「想定」段階のものを含み、最終確定ではありません。</p>
+  <p><strong>追い切りタイムについて：</strong>8/19（水）の最終追い切りについて、各メディアが報じた時計と関係者コメントを反映しました。ただしnetkeibaの追い切り一覧としての詳細データはレース前日（8/22）13時公開予定のため、全馬分が揃っているわけではありません。直前の状態確認は各自リンク先でお願いします。</p>
+  <p>馬券の購入・予想の判断は自己責任でお願いします。出馬表・オッズ・馬体重は直前まで変動するため、最終判断は必ずJRA公式または各種競馬情報サイトの最新情報でご確認ください。</p>
+  <p><strong>AI印について：</strong>各レースの◎○▲△は、近走成績・調教師談話・専門メディアの見解などをAIが横断的に整理して付けた参考目安であり、独自の予想モデルやオッズに基づく的中率の高い予想ではありません。的中を保証するものでは一切ありませんので、あくまで参考情報としてご利用ください。</p>
+  <p><strong>通算成績・人気について：</strong>通算成績はnetkeiba記載の数値を基にしています。獲得賞金額はデータ取得時に数値の食い違いが大きく信頼できなかったため、誤情報を避ける観点から今回は掲載を見送りました。単勝人気・オッズはレース前日13時ごろの発表まで確定しないため、現時点で判明している事前の下馬評のみ記載しています。</p>
+  <p><strong>天気予報・脚質データについて：</strong>天気予報は取得時点の週間予報であり、開催日が近づくにつれて変動します。脚質データは各レースの過去10年間の脚質別成績で、個別馬の想定脚質ではありません(信頼できる出典が見つからなかったため掲載を見送りました)。血統(父・母父)も取得を試みましたが、明らかな誤り(実在しない組み合わせ等)が多く含まれていたため掲載していません。なお血統情報は、対象レースがGI格付けの場合に限り、JBISサーチ・Wikipedia等の複数の独立した情報源で生年・性別が矛盾しないことを照合できた馬についてのみ、AI参考印の理由文に一文加えることがあります(該当馬のみの例外的な記載で、出走表の列としては追加しません)。</p>
+</details>
+
+<div class="tabs" role="tablist">
+  <button type="button" class="tab-btn active" role="tab" aria-selected="true" aria-controls="race-niigata2sai" data-target="race-niigata2sai"><span class="tab-grade">GIII</span>新潟2歳S</button>
+  <button type="button" class="tab-btn" role="tab" aria-selected="false" aria-controls="race-keenelandc" data-target="race-keenelandc"><span class="tab-grade">GIII</span>キーンランドC</button>
+</div>
+
+<section class="race race-panel" id="race-niigata2sai" role="tabpanel">
+  <div class="race-head">
+    <span class="grade-badge">GIII</span>
+    <h2>新潟2歳ステークス</h2>
+    <span class="race-meta">新潟競馬場・芝1600m／8月23日(日) 7R・2歳オープン</span>
+  </div>
+
+  <div class="course-info">
+    <div class="course-specs">
+      <span class="spec"><span class="spec-label">回り</span><span class="spec-value">左・外回り</span></span>
+      <span class="spec"><span class="spec-label">直線</span><span class="spec-value">658.7m</span></span>
+      <span class="spec"><span class="spec-label">高低差</span><span class="spec-value">2.2m</span></span>
+      <span class="spec"><span class="spec-label">天気予報</span><span class="spec-value">31℃/25℃ 降水20%</span></span>
+    </div>
+    <p class="course-note">日本最長級の直線を持つ平坦コース。3コーナー手前まで緩やかに上り、3〜4コーナーで下ってから直線へ。坂による消耗が少なく、スローペースからの上がり勝負・瞬発力勝負になりやすい。新馬・2歳戦は先行馬の経験差が出やすい一方、直線が長いため差し・追込も届く。過去10年の脚質別成績(1-2-3-着外)は差し7-5-4-36、先行3-2-3-27、追込0-1-2-24、逃げ0-2-1-7で、差し馬が明確に優勢。</p>
+  </div>
+
+  <div class="pick-info">
+    <div class="pick-info-head">
+      <span class="pick-info-title">AI参考印</span>
+      <span class="pick-info-sub">近走成績・関係者談話・最終追い切り・専門メディアの見解・騎手情報をもとに整理(8/21時点、的中を保証しません)</span>
+    </div>
+    <div class="pick-list">
+      <div class="pick-row"><span class="pick-mark m-honmei">◎</span><span class="pick-horse"><span class="num-badge">2</span>インカルナータ</span><span class="pick-reason">阪神芝1800m新馬戦を逃げ切り完勝、下馬評も高い。最終追い切りは栗東坂路で鋭い反応を見せ西園師「ラストもしっかり反応」。主戦の坂井瑠星騎手が新馬戦から継続騎乗。ただし当レースは過去10年で差し優勢、逃げ切りは0勝という点は割引材料</span></div>
+      <div class="pick-row"><span class="pick-mark m-taikou">○</span><span class="pick-horse"><span class="num-badge">10</span>レッチュベルク</span><span class="pick-reason">東京芝1600m新馬戦を上がり最速3馬身差で快勝、直線の長い新潟向きの脚質。田辺裕信騎手が新馬戦から継続騎乗</span></div>
+      <div class="pick-row"><span class="pick-mark m-tana">▲</span><span class="pick-horse"><span class="num-badge">4</span>シャンデヴァーグ</span><span class="pick-reason">東京芝1600m新馬戦を断然人気に応えて完勝、直線の長いコースが合う。最終追い切りは美浦坂路を馬なりでラスト12秒1、森一師「うまく仕上がった」「瞬発力はかなりありそう」。津村明秀騎手が新馬戦から継続騎乗</span></div>
+      <div class="pick-row"><span class="pick-mark m-renka">△</span><span class="pick-horse"><span class="num-badge">7</span>トップチェッカー</span><span class="pick-reason">新馬戦快勝、折り合い面の評価が高く長くいい脚を使えるタイプ。最終追い切りは控えめな内容ながら気配良好、北村友一騎手「しっかりとポテンシャルの高さを発揮してほしい」。同騎手は2歳戦に定評があり、2024年のホープフルSも制している</span></div>
+      <div class="pick-row"><span class="pick-mark m-renka">△</span><span class="pick-horse"><span class="num-badge">6</span>トウシンマジック</span><span class="pick-reason">同舞台(新潟)のデビュー戦で非凡な末脚を披露。1週前にWコース自己最速6F81秒2、最終追い切りも美浦坂路4F54秒4―12秒4と気配は上昇一途で秋本師「ベースは上がった」。ミュール・コレット騎手が新馬戦から継続騎乗</span></div>
+    </div>
+  </div>
+
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr><th>AI印</th><th>枠</th><th>馬番</th><th>馬名</th><th>性齢</th><th>斤量</th><th>通算成績</th><th>人気</th><th>騎手</th><th>調教師</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="mark-cell"></td><td><span class="waku" style="background:var(--waku1-bg);color:var(--waku1-fg);border-color:var(--waku1-bd);">1</span></td><td>1</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2024102830/" target="_blank" rel="noopener">アイデアルカット</a></td><td>牡2</td><td>55.0</td><td>2戦0勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/01134/" target="_blank" rel="noopener">嶋田</a></td><td>手塚徳</td></tr>
+        <tr><td class="mark-cell m-honmei">◎</td><td><span class="waku" style="background:var(--waku2-bg);color:var(--waku2-fg);border-color:var(--waku2-bd);">2</span></td><td>2</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2024106282/" target="_blank" rel="noopener">インカルナータ</a></td><td>牡2</td><td>55.0</td><td>1戦1勝</td><td>予想1番人気</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/01163/" target="_blank" rel="noopener">坂井</a></td><td>西園翔</td></tr>
+        <tr><td class="mark-cell"></td><td><span class="waku" style="background:var(--waku3-bg);color:var(--waku3-fg);border-color:var(--waku3-bd);">3</span></td><td>3</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2024106831/" target="_blank" rel="noopener">エレスレイプニル</a></td><td>牡2</td><td>55.0</td><td>2戦0勝</td><td>―</td><td>―</td><td>杉浦</td></tr>
+        <tr><td class="mark-cell m-tana">▲</td><td><span class="waku" style="background:var(--waku4-bg);color:var(--waku4-fg);border-color:var(--waku4-bd);">4</span></td><td>4</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2024106025/" target="_blank" rel="noopener">シャンデヴァーグ</a></td><td>牝2</td><td>55.0</td><td>1戦1勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/01092/" target="_blank" rel="noopener">津村</a></td><td>森一</td></tr>
+        <tr><td class="mark-cell"></td><td><span class="waku" style="background:var(--waku5-bg);color:var(--waku5-fg);border-color:var(--waku5-bd);">5</span></td><td>5</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2024104483/" target="_blank" rel="noopener">スイートアリッサム</a></td><td>牝2</td><td>55.0</td><td>1戦0勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/01135/" target="_blank" rel="noopener">杉原</a></td><td>大和田</td></tr>
+        <tr><td class="mark-cell m-renka">△</td><td><span class="waku" style="background:var(--waku6-bg);color:var(--waku6-fg);border-color:var(--waku6-bd);">6</span></td><td>6</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2024104696/" target="_blank" rel="noopener">トウシンマジック</a></td><td>牡2</td><td>55.0</td><td>1戦1勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/05035/" target="_blank" rel="noopener">コレット</a></td><td>秋本</td></tr>
+        <tr><td class="mark-cell m-renka">△</td><td><span class="waku" style="background:var(--waku7-bg);color:var(--waku7-fg);border-color:var(--waku7-bd);">7</span></td><td>7</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2024100521/" target="_blank" rel="noopener">トップチェッカー</a></td><td>牡2</td><td>55.0</td><td>1戦1勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/01102/" target="_blank" rel="noopener">北村友</a></td><td>武英</td></tr>
+        <tr><td class="mark-cell"></td><td><span class="waku" style="background:var(--waku8-bg);color:var(--waku8-fg);border-color:var(--waku8-bd);">8</span></td><td>8</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2024102852/" target="_blank" rel="noopener">マイホームパパ</a></td><td>牡2</td><td>55.0</td><td>2戦0勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/00689/" target="_blank" rel="noopener">江田照</a></td><td>深山</td></tr>
+        <tr><td class="mark-cell"></td><td><span class="waku" style="background:var(--waku1-bg);color:var(--waku1-fg);border-color:var(--waku1-bd);">―</span></td><td>9</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2024103226/" target="_blank" rel="noopener">マインドフルネス</a></td><td>牝2</td><td>55.0</td><td>0戦0勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/01161/" target="_blank" rel="noopener">菊沢</a></td><td>村田</td></tr>
+        <tr><td class="mark-cell m-taikou">○</td><td><span class="waku" style="background:var(--waku2-bg);color:var(--waku2-fg);border-color:var(--waku2-bd);">―</span></td><td>10</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2024106687/" target="_blank" rel="noopener">レッチュベルク</a></td><td>牡2</td><td>55.0</td><td>1戦1勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/01075/" target="_blank" rel="noopener">田辺</a></td><td>久保田</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="comments-label">関係者談話（8/21時点・最終追い切り後）</p>
+  <div class="comment-grid">
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">1</span>アイデアルカット</div>
+      <div class="who">小山助手（手塚徳厩舎）</div>
+      <blockquote>「稽古は併せ馬で外めを通っていい動きだった。2回使って体調面の上積みはある」</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">2</span>インカルナータ</div>
+      <div class="who">西園翔太 調教師</div>
+      <blockquote>栗東坂路での最終リハーサル後「最後もしっかり反応できていた。予定通り、いい状態に仕上がったと思います」。馬体にも幅が出て「大きくなりましたね。デビュー前と比べても時計が出ますし、パワーアップしています」。新馬戦の阪神芝1800mから今回は1F短縮・左回りに替わるが「全然問題ないと思います。距離もマイルまでは対応できると思います」と自信を見せている</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">4</span>シャンデヴァーグ</div>
+      <div class="who">森一誠 調教師／津村明秀 騎手</div>
+      <blockquote>最終追い切りは美浦坂路を馬なりでラスト1ハロン12秒1。森一誠調教師は「うまく仕上がったと思う」とし、しなやかな動きに「瞬発力はかなりありそう」。「体は420キロ台で変わらずだけど、調教は順調に積めている。直線の長いコースは合っていると思う」とも。1週前追い切り（Wコース6ハロン82秒9―11秒2で年長馬に先着）に騎乗した津村明秀騎手は「馬場が悪かったけど、しっかりと走れていた。テンションが上がることなく、いい雰囲気です」。</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">3</span>エレスレイプニル</div>
+      <div class="who">杉浦宏昭 調教師</div>
+      <blockquote>「前走は距離延長でゴール前は伸びてきていた。使った上積みもあると思うが、少し動きに重さもある」</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">5</span>スイートアリッサム</div>
+      <div class="who">大和田成 調教師</div>
+      <blockquote>「先行したけど、攻め駆けする相手に差を詰められてから、もうひとつギアが上がる走りだったし、いい追い切りができた」</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">6</span>トウシンマジック</div>
+      <div class="who">秋本博臣 調教師／山田助手</div>
+      <blockquote>最終追い切りは美浦坂路を単走、外ラチ一杯をリズムよく駆け上がり4ハロン54秒4―12秒4。秋本博臣調教師は「リズムよく単走しまい重点で、動きは良かったです。ベースは上がったと思うし、十分チャンスがある」。1週前にはWコースで自己最速の6ハロン81秒2を計時しており、気配は上昇。山田助手は新馬勝ち後「末脚を生かす形が理想だと思う」と見通しを語った。</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">7</span>トップチェッカー</div>
+      <div class="who">武英智 調教師／北村友一 騎手</div>
+      <blockquote>「格好が良く、いいところまで行きそうな馬。折り合いは問題ないし、長くいい脚を使える」（武英智調教師）。最終追い切りは栗東坂路で先行するサーディンランを馬なりで追走して併入、息を整える控えめな内容ながら気配は良好。北村友一騎手は「十分仕上がっているので、前に馬を置いて、無理をしないで併せる形。1度使ったことで、体が楽になっているし、息遣いも良かった。しっかりとポテンシャルの高さを発揮してほしい」。</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">10</span>レッチュベルク</div>
+      <div class="who">池内助手（久保田厩舎）／田辺裕信 騎手</div>
+      <blockquote>「前走後はここを目標にやってきた。東京マイルで勝っているので新潟マイルでも特に問題はない」（1週前追い切り後、田辺騎手）「促すだけでいい反応をしていた。行き出したときのフォームも良かった」</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">8</span>マイホームパパ</div>
+      <div class="who">長島助手（深山厩舎）</div>
+      <blockquote>「いつもどおりの動きだった。状態は悪くないので、あとはゲートを決めてくれれば」</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">9</span>マインドフルネス</div>
+      <div class="who">菊沢一樹 騎手</div>
+      <blockquote>「動きは良かったし、いいものを持っていそうです。ただ、初出走なので返し馬やゲートを含めてメンタル面に気をつけたい」</blockquote>
+    </div>
+  </div>
+</section>
+
+<section class="race race-panel" id="race-keenelandc" role="tabpanel" hidden>
+  <div class="race-head">
+    <span class="grade-badge">GIII</span>
+    <h2>キーンランドカップ</h2>
+    <span class="race-meta">札幌競馬場・芝1200m／8月23日(日) 11R・3歳上オープン（サマースプリントS第21回）</span>
+  </div>
+
+  <div class="course-info">
+    <div class="course-specs">
+      <span class="spec"><span class="spec-label">回り</span><span class="spec-value">右回り</span></span>
+      <span class="spec"><span class="spec-label">直線</span><span class="spec-value">266.1m</span></span>
+      <span class="spec"><span class="spec-label">高低差</span><span class="spec-value">0.7m</span></span>
+      <span class="spec"><span class="spec-label">天気予報</span><span class="spec-value">30℃/21℃ 降水20%</span></span>
+    </div>
+    <p class="course-note">直線の短い小回りコースでほぼ平坦。洋芝は野芝より柔らかく時計がかかりやすい。開催後半になるほど馬場が荒れ、短距離戦でも外差しが決まりやすくなる。過去10年の脚質別成績(1-2-3-着外)は差し5-3-4-46、先行3-4-3-26、逃げ1-2-2-5、追込1-1-1-46で、無難に運べる差し・先行馬が優勢。追込は届きにくい傾向。</p>
+  </div>
+
+  <div class="pick-info">
+    <div class="pick-info-head">
+      <span class="pick-info-title">AI参考印</span>
+      <span class="pick-info-sub">近走成績・関係者談話・最終追い切り・専門メディアの見解・騎手情報をもとに整理(8/21時点、的中を保証しません)</span>
+    </div>
+    <div class="pick-list">
+      <div class="pick-row"><span class="pick-mark m-honmei">◎</span><span class="pick-horse"><span class="num-badge">12</span>パンジャタワー</span><span class="pick-reason">前年覇者、高松宮記念4着・安田記念5着とGIでも大崩れなし。最終追い切りは札幌芝を単走・馬なりで5F62秒5―11秒1の好時計、五十嵐助手も「イメージ通り」と連覇へ視界良好。主戦の松山弘平騎手は「GⅠ馬としての意地でここは決めたい」と継続騎乗で連覇に意欲</span></div>
+      <div class="pick-row"><span class="pick-mark m-taikou">○</span><span class="pick-horse"><span class="num-badge">17</span>ロジケープ</span><span class="pick-reason">3連勝中と勢いのある3歳馬、尾形師も「前走は本当に強かった」と評価。最終追い切りに騎乗した丹内祐次騎手は「ダイナミックな走り」「1200メートルという距離もいい」と好感触。同騎手は重賞制覇経験も豊富なベテラン</span></div>
+      <div class="pick-row"><span class="pick-mark m-tana">▲</span><span class="pick-horse"><span class="num-badge">2</span>ウインカーネリアン</span><span class="pick-reason">前走(札幌・UHB賞)1着、9歳ながら状態は良化と厩舎からも高評価。最終追い切りは函館芝を単走で4F55秒3―11秒6、三浦皇成騎手も「去年以上に順調なのは何より」と手応え。同騎手が継続騎乗</span></div>
+      <div class="pick-row"><span class="pick-mark m-renka">△</span><span class="pick-horse"><span class="num-badge">11</span>ナムラクララ</span><span class="pick-reason">重賞初制覇に挑む、精神面が安定し追い切りの動きも軽快。ただし中1週の臨戦で長谷川師は「上積み自体はないかもしれない」と慎重な見方。手綱の浜中俊騎手はかつて24歳で全国リーディングを獲得した実力派</span></div>
+      <div class="pick-row"><span class="pick-mark m-renka">△</span><span class="pick-horse"><span class="num-badge">5</span>カルプスペルシュ</span><span class="pick-reason">前走の左右のモタれが解消、状態は上向き。最終追い切りは札幌芝で併せ馬を5F65秒8―11秒4でクビ差先着。横山武史騎手が手綱を取る</span></div>
+    </div>
+  </div>
+
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr><th>AI印</th><th>枠</th><th>馬番</th><th>馬名</th><th>性齢</th><th>斤量</th><th>通算成績</th><th>人気</th><th>騎手</th><th>調教師</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="mark-cell"></td><td><span class="waku" style="background:var(--waku1-bg);color:var(--waku1-fg);border-color:var(--waku1-bd);">1</span></td><td>1</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2021107063/" target="_blank" rel="noopener">イツモニコニコ</a></td><td>牝5</td><td>55.0</td><td>20戦4勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/05694/" target="_blank" rel="noopener">ナレドゥ</a></td><td>浜田</td></tr>
+        <tr><td class="mark-cell m-tana">▲</td><td><span class="waku" style="background:var(--waku2-bg);color:var(--waku2-fg);border-color:var(--waku2-bd);">2</span></td><td>2</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2017101429/" target="_blank" rel="noopener">ウインカーネリアン</a></td><td>牡9</td><td>59.0</td><td>35戦9勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/01122/" target="_blank" rel="noopener">三浦</a></td><td>鹿戸</td></tr>
+        <tr><td class="mark-cell"></td><td><span class="waku" style="background:var(--waku3-bg);color:var(--waku3-fg);border-color:var(--waku3-bd);">3</span></td><td>3</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2023105505/" target="_blank" rel="noopener">エイシンディード</a></td><td>牡3</td><td>55.0</td><td>6戦2勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/01166/" target="_blank" rel="noopener">川又</a></td><td>大久保</td></tr>
+        <tr><td class="mark-cell"></td><td><span class="waku" style="background:var(--waku4-bg);color:var(--waku4-fg);border-color:var(--waku4-bd);">4</span></td><td>4</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2019105859/" target="_blank" rel="noopener">エーティーマクフィ</a></td><td>牡7</td><td>57.0</td><td>33戦6勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/01168/" target="_blank" rel="noopener">富田</a></td><td>武英</td></tr>
+        <tr><td class="mark-cell m-renka">△</td><td><span class="waku" style="background:var(--waku5-bg);color:var(--waku5-fg);border-color:var(--waku5-bd);">5</span></td><td>5</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2022104960/" target="_blank" rel="noopener">カルプスペルシュ</a></td><td>牝4</td><td>55.0</td><td>15戦4勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/01170/" target="_blank" rel="noopener">横山武</a></td><td>石坂</td></tr>
+        <tr><td class="mark-cell"></td><td><span class="waku" style="background:var(--waku6-bg);color:var(--waku6-fg);border-color:var(--waku6-bd);">6</span></td><td>6</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2022102057/" target="_blank" rel="noopener">サウンドモリアーナ</a></td><td>牝4</td><td>55.0</td><td>14戦5勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/00666/" target="_blank" rel="noopener">武豊</a></td><td>武英</td></tr>
+        <tr><td class="mark-cell"></td><td><span class="waku" style="background:var(--waku7-bg);color:var(--waku7-fg);border-color:var(--waku7-bd);">7</span></td><td>7</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2021100522/" target="_blank" rel="noopener">ジョーメッドヴィン</a></td><td>牡5</td><td>57.0</td><td>33戦5勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/05390/" target="_blank" rel="noopener">吉村智</a></td><td>清水久</td></tr>
+        <tr><td class="mark-cell"></td><td><span class="waku" style="background:var(--waku8-bg);color:var(--waku8-fg);border-color:var(--waku8-bd);">8</span></td><td>8</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2018101343/" target="_blank" rel="noopener">ゾンニッヒ</a></td><td>牡8</td><td>57.0</td><td>38戦6勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/05693/" target="_blank" rel="noopener">ロイド</a></td><td>池江</td></tr>
+        <tr><td class="mark-cell"></td><td><span class="waku" style="background:var(--waku1-bg);color:var(--waku1-fg);border-color:var(--waku1-bd);">1</span></td><td>9</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2021105774/" target="_blank" rel="noopener">ダノンマッキンリー</a></td><td>牡5</td><td>57.0</td><td>20戦4勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/01032/" target="_blank" rel="noopener">池添</a></td><td>藤原</td></tr>
+        <tr><td class="mark-cell"></td><td><span class="waku" style="background:var(--waku2-bg);color:var(--waku2-fg);border-color:var(--waku2-bd);">2</span></td><td>10</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2020110090/" target="_blank" rel="noopener">ティニア</a></td><td>牡6</td><td>57.0</td><td>26戦4勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/01015/" target="_blank" rel="noopener">古川吉</a></td><td>池江</td></tr>
+        <tr><td class="mark-cell m-renka">△</td><td><span class="waku" style="background:var(--waku3-bg);color:var(--waku3-fg);border-color:var(--waku3-bd);">3</span></td><td>11</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2022102887/" target="_blank" rel="noopener">ナムラクララ</a></td><td>牝4</td><td>55.0</td><td>15戦4勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/01115/" target="_blank" rel="noopener">浜中</a></td><td>長谷川</td></tr>
+        <tr><td class="mark-cell m-honmei">◎</td><td><span class="waku" style="background:var(--waku4-bg);color:var(--waku4-fg);border-color:var(--waku4-bd);">4</span></td><td>12</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2022101732/" target="_blank" rel="noopener">パンジャタワー</a></td><td>牡4</td><td>58.0</td><td>10戦4勝</td><td>前年覇者</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/01126/" target="_blank" rel="noopener">松山</a></td><td>橋口</td></tr>
+        <tr><td class="mark-cell"></td><td><span class="waku" style="background:var(--waku5-bg);color:var(--waku5-fg);border-color:var(--waku5-bd);">5</span></td><td>13</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2018102155/" target="_blank" rel="noopener">マイネルジェロディ</a></td><td>牡8</td><td>57.0</td><td>37戦4勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/05695/" target="_blank" rel="noopener">Rヘルナン</a></td><td>室井</td></tr>
+        <tr><td class="mark-cell"></td><td><span class="waku" style="background:var(--waku6-bg);color:var(--waku6-fg);border-color:var(--waku6-bd);">6</span></td><td>14</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2022104922/" target="_blank" rel="noopener">リラエンブレム</a></td><td>牡4</td><td>57.0</td><td>6戦2勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/05339/" target="_blank" rel="noopener">ルメール</a></td><td>武幸</td></tr>
+        <tr><td class="mark-cell"></td><td><span class="waku" style="background:var(--waku7-bg);color:var(--waku7-fg);border-color:var(--waku7-bd);">7</span></td><td>15</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2022103592/" target="_blank" rel="noopener">ルシード</a></td><td>牡4</td><td>57.0</td><td>17戦4勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/05585/" target="_blank" rel="noopener">レーン</a></td><td>田島</td></tr>
+        <tr><td class="mark-cell"></td><td><span class="waku" style="background:var(--waku8-bg);color:var(--waku8-fg);border-color:var(--waku8-bd);">8</span></td><td>16</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2019103594/" target="_blank" rel="noopener">レッドアヴァンティ</a></td><td>牡7</td><td>57.0</td><td>23戦4勝</td><td>―</td><td>―</td><td>尾関</td></tr>
+        <tr><td class="mark-cell m-taikou">○</td><td><span class="waku" style="background:var(--waku1-bg);color:var(--waku1-fg);border-color:var(--waku1-bd);">1</span></td><td>17</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2023104015/" target="_blank" rel="noopener">ロジケープ</a></td><td>牡3</td><td>55.0</td><td>8戦4勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/01091/" target="_blank" rel="noopener">丹内</a></td><td>尾形</td></tr>
+        <tr><td class="mark-cell"></td><td><span class="waku" style="background:var(--waku2-bg);color:var(--waku2-fg);border-color:var(--waku2-bd);">2</span></td><td>18</td><td class="horse-name"><a href="https://db.netkeiba.com/horse/2021100130/" target="_blank" rel="noopener">ロードフォアエース</a></td><td>牡5</td><td>57.0</td><td>20戦5勝</td><td>―</td><td><a class="jockey-link" href="https://db.netkeiba.com/jockey/01174/" target="_blank" rel="noopener">岩田望</a></td><td>友道</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="comments-label">関係者談話（8/21時点・最終追い切り後）</p>
+  <div class="comment-grid">
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">12</span>パンジャタワー</div>
+      <div class="who">五十嵐助手（橋口厩舎）／松山弘平 騎手</div>
+      <blockquote>最終追い切りは札幌芝コースを単走・馬なりで5ハロン62秒5―48秒3―34秒1―11秒1の好時計。五十嵐助手は「去年と同じイメージで、しっかりスピードに乗せてやりました。先週の動きがダイナミックで、良くなってきている感触だったのでけさは折り合いや手前の替え方を確認しましたが、そこも自分のイメージ通りでしたよ。うまいこと成長してくれていると思います」。かねて「やるごとに気持ちも入ってきて、体もどんどん弾んできています。とにかく元気です」とも語っていた。連覇へ手綱を取る松山弘平騎手は「GⅠ馬としての意地でここは決めたい」と力を込めている。</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">17</span>ロジケープ</div>
+      <div class="who">尾形和幸 調教師／丹内祐次 騎手</div>
+      <blockquote>3連勝でオープン入りを決めての参戦、重賞初挑戦にあたり尾形和幸調教師は「前走は本当に強かった」。最終追い切りは丹内祐次騎手が騎乗し函館Wコースを馬なりで5ハロン68秒5―12秒3、鋭い加速を見せた。丹内騎手は「良かったですよ。ダイナミックな走りをしていました。手応えも良かったですし、具合は良さそう。折り合いの面でも良くなってきていますし、重賞でも楽しみにしています。やっぱり1200メートルという距離もいいですね」。</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">2</span>ウインカーネリアン</div>
+      <div class="who">千島助手（鹿戸厩舎）／三浦皇成 騎手</div>
+      <blockquote>最終追い切りは三浦皇成騎手を背に函館芝コースを単走、4ハロン55秒3―11秒6をパワフルにマーク。三浦騎手は「変わらず順調です。きょうはブリンカーをして、気持ちも入っていましたし、フットワークも変わらずいい脚取りで最後まで走れていました。目標である秋のスプリンターズSに向けていいステップを踏めたらと思います。去年以上に順調なのは何よりです」。千島助手も「去年よりも気が入っています。この年齢でも衰えはないし、体も若いですね」と話していた。</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">11</span>ナムラクララ</div>
+      <div class="who">長谷川 調教師／谷川助手（長谷川厩舎）</div>
+      <blockquote>最終追い切りは芝で併せ馬、内から追走して馬なりで1馬身半先着（5ハロン66秒9―11秒7）。中1週の臨戦について長谷川調教師は「中1週だし、硬さが出る馬なのでしっかりケアをして…。上積み自体はないかもしれないですけど状態は変わらず来れています」「この2回で結果を出せたことが大きい。メンバーは強いですが、流れが向いてしぶとく脚を伸ばしてくれれば」。谷川助手は「精神的にドッシリしたタイプ。お姉さん（2023年V・ナムラクレア）に続ければいいですね」。</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">5</span>カルプスペルシュ</div>
+      <div class="who">松原助手（石坂厩舎）</div>
+      <blockquote>前走は右にモタれて追いづらかったが「左右差もなく走れていました。前走よりさらにいい状態で使えそう。引き続き（浅めの）ブリンカーを着用していきます」。最終追い切りは札幌芝コースでイチトゼロノアイダと併せ、助手騎乗の馬なり追いで5ハロン65秒8―11秒4、クビ差先着した。</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">6</span>サウンドモリアーナ</div>
+      <div class="who">荻野助手（武英厩舎）</div>
+      <blockquote>「ある程度まで栗東でつくってきたので1週前の段階でほぼできていました。滞在が合うタイプと思いますし、少し時計のかかる芝のほうが走っているので、洋芝に替わるのはいい」。枠については「ハナにこだわる必要はない馬ですが、それなりに位置は取るので枠は大事になりそう」</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">10</span>ティニア</div>
+      <div class="who">音瀬助手（池江厩舎）</div>
+      <blockquote>「もともと落ち着いたタイプで、昨年もそうでしたが北海道では安定して走ってくれます。暑い時季の方が体調も良く、洋芝も合っています」</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">4</span>エーティーマクフィ</div>
+      <div class="who">富田暁 騎手</div>
+      <blockquote>「使ったことで馬がさらに上向いています。夏が弱い馬なので函館の気候もいいです」</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">3</span>エイシンディード</div>
+      <div class="who">川又賢治 騎手</div>
+      <blockquote>「1週前はハミを取って集中していて、感触は良かった。単走のぶん最後はもう少し動けたなという手応えもありましたが、しっかりやってこれで変わると思います」。1週前は川又賢治騎手を背に札幌芝コースの単走追いで5ハロン63秒8―11秒5をマークした。</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">1</span>イツモニコニコ</div>
+      <div class="who">浜田 調教師</div>
+      <blockquote>スラジ・ナレドゥ騎手（JRA初騎乗）との新コンビについて「折り合いをつけるのが上手ということで、お願いしました」</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">8</span>ゾンニッヒ</div>
+      <div class="who">林克之 助手（池江厩舎）</div>
+      <blockquote>「順調に来ているのであとは結果に結びついてくれれば」</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">9</span>ダノンマッキンリー</div>
+      <div class="who">中森助手（藤原厩舎）</div>
+      <blockquote>函館ウッドで5F70秒8の一週前追い切り後「栗東より落ち着いていて滞在効果は十分です」</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">13</span>マイネルジェロディ</div>
+      <div class="who">椎本助手（室井厩舎）</div>
+      <blockquote>「やれば5F63秒くらい出てしまう馬なので、輸送も考えて余力残しでしたが、体調面は変わりなく来ています。年齢的に上がり目は少ないですが状態はキープできています」</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">14</span>リラエンブレム</div>
+      <div class="who">武幸 調教師</div>
+      <blockquote>長期休養明け3戦目、函館ウッドの追い切り後「あまりやり過ぎないようにと思っていたので予定通りの内容。初めてのスプリント戦に対応できるかだけど、ピッチ走法なので、どこかで距離を詰めたいとは思っていた。ハマれば」</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">18</span>ロードフォアエース</div>
+      <div class="who">安田晋司 助手（友道厩舎）</div>
+      <blockquote>「前走のUHB賞は意図的に体を絞ったところがあったのですが、しっかり走ってくれたと思います。中間は今回のレースに向けて疲れを残さないように調整してきました。輸送は慣れていますし、札幌に来ても特に緊張することも無くここまで来ることができました」</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">7</span>ジョーメッドヴィン</div>
+      <div class="who">陣営（清水久詞厩舎）</div>
+      <blockquote>「洋芝は合っていますね。小回り平坦もいいです」と当コース適性を評価する声。一発を狙える洋芝巧者として参戦する。</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">16</span>レッドアヴァンティ</div>
+      <div class="who">沖野助手（尾関厩舎）</div>
+      <blockquote>「札幌に来てからも動きは素軽い。一戦使って、後肢の感じも良くなっている」</blockquote>
+    </div>
+    <div class="comment-card">
+      <div class="horse"><span class="num-badge">15</span>ルシード</div>
+      <div class="who">情報未収集</div>
+      <div class="no-comment">現時点で関係者コメントは見つかりませんでした。直前のスポーツ紙・netkeibaニュースをご確認ください。</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <h3>主な情報源</h3>
+  <ul>
+    <li><a href="https://www.jra.go.jp/keiba/thisweek/" target="_blank" rel="noopener">JRA公式「今週の注目レース」</a></li>
+    <li><a href="https://race.netkeiba.com/race/shutuba.html?race_id=202604030207" target="_blank" rel="noopener">netkeiba 新潟2歳S 出馬表</a></li>
+    <li><a href="https://race.netkeiba.com/race/shutuba.html?race_id=202601020211" target="_blank" rel="noopener">netkeiba キーンランドC 出馬表</a></li>
+    <li><a href="https://umanity.jp/racedata/race_newsdet.php?nid=11876139" target="_blank" rel="noopener">ウマニティ 新潟2歳S 1週前関係者談話</a></li>
+    <li><a href="https://umanity.jp/racedata/race_newsdet.php?nid=11876138" target="_blank" rel="noopener">ウマニティ キーンランドC 1週前関係者談話</a></li>
+    <li><a href="https://umanity.jp/racedata/race_newsdet.php?nid=11876343" target="_blank" rel="noopener">ウマニティ 新潟2歳S 調教スタンドから（最終追い切り）</a></li>
+    <li><a href="https://umanity.jp/racedata/race_newsdet.php?nid=11876350" target="_blank" rel="noopener">ウマニティ キーンランドC 調教スタンドから（最終追い切り）</a></li>
+    <li><a href="https://umanity.jp/racedata/race_newsdet.php?nid=11876351" target="_blank" rel="noopener">ウマニティ キーンランドC 追って一言</a></li>
+  </ul>
+  <p class="disclaimer-foot">本ページは複数サイトの情報をAIが横断検索・要約したものであり、内容の正確性を保証するものではありません。掲載後にも出走取消・騎手変更・状態変化が起こり得ます。実際の馬券購入前には必ず公式発表・一次情報でのご確認をお願いします。</p>
+</footer>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.tab-btn').forEach(function(b){
+      b.classList.remove('active');
+      b.setAttribute('aria-selected','false');
+    });
+    document.querySelectorAll('.race-panel').forEach(function(p){
+      p.hidden = true;
+    });
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected','true');
+    document.getElementById(btn.dataset.target).hidden = false;
+  });
+});
+</script>
+
+</div>
